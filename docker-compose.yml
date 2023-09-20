@@ -1,0 +1,11 @@
+services:
+  node:
+    build:
+      context: .
+      target: base
+    command: npm run watch
+    ports:
+      - 3888:3000
+    volumes:
+      - ./:/app/
+      - /app/node_modules
