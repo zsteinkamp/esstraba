@@ -1,36 +1,71 @@
 import fs from 'fs'
 import { parse } from 'csv-parse';
+import path from 'path';
 
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
+type CsvRecords = Record<string, any>[]
 
 export class CsvObjWatcher {
-  dataPath: string
+  fullDataPath: string
   dataStat: fs.Stats
+  _records: CsvRecords = []
 
   constructor(dataPath: string) {
-    this.dataPath = dataPath
-    this.dataStat = fs.statSync(`data/${this.dataPath}`)
+    this.fullDataPath = path.resolve(`data/${dataPath}.csv`)
+    this.dataStat = fs.statSync(this.fullDataPath)
+    setInterval(this.checkFile.bind(this), 4000)
   }
 
-  async processFile(): Promise<any[]> {
-    const records = [];
+  checkFile(): void {
+    const currStat = fs.statSync(this.fullDataPath)
+    const csm = currStat.mtime.getTime()
+    const dsm = this.dataStat.mtime.getTime()
+    const statDiff = csm !== dsm
+    console.info('CHECK FILE', { len: this._records.length, csm, dsm, statDiff })
+    if (this._records.length === 0 || statDiff) {
+      console.info('PROCESS FILE')
+      this.processFile()
+      this.dataStat = currStat
+    }
+  }
+
+  records(): CsvRecords {
+    return this._records
+  }
+
+  async processFile(): Promise<this> {
+    if (!this.dataStat) {
+      return this
+    }
+    const headerParser = fs.createReadStream(this.fullDataPath).pipe(parse({ to_line: 1 }))
+    let headers = []
+    for await (const record of headerParser) {
+      headers = record;
+      // should only run once
+    }
+
+    // unf**k the header names for untranslated warnings
+    headers.forEach((h: string, i: number) => {
+      headers[i] = h.replaceAll(/<[^>]+>/g, '')
+    })
+
+    this._records = []
+
+    // now read the rest of the file
     const parser = fs
-      .createReadStream(`data/${this.dataPath}`)
+      .createReadStream(this.fullDataPath)
       .pipe(parse({
-        // CSV options if any
-      }));
+        // CSV options
+        columns: headers, // pass our fixed-up headers
+        from_line: 2, // skip the header row
+      }))
     for await (const record of parser) {
       // Work with each record
-      records.push(record);
+      this._records.push(record);
     }
-    return records;
-  }
-
-  output(): string {
-    this.processFile()
-    return this.dataPath
+    return this
   }
 
 }
