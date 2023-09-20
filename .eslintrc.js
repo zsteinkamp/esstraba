@@ -1,27 +1,30 @@
 module.exports = {
-    "env": {
-        "es6": true,
-        "node": true,
+    env: {
+        es6: true,
+        node: true,
     },
-    "parser": "@typescript-eslint/parser",
-    "extends": [
+    parser: "@typescript-eslint/parser",
+    extends: [
         "plugin:@typescript-eslint/recommended",
         "plugin:import/typescript",
     ],
-    "plugins": ["@typescript-eslint"],
+    plugins: ["@typescript-eslint"],
 
-    "parserOptions": {
-        "ecmaVersion": 2018,
-        "sourceType": "module",
+    parserOptions: {
+        ecmaVersion: 2018,
+        sourceType: "module",
     },
 
-    "rules": {
-        "max-len": ["warn", { "code": 120 }],
+    rules: {
+        "max-len": ["warn", { code: 120 }],
         "comma-dangle": ["error", "always-multiline"],
-        "@typescript-eslint/semi": ["error"],
         "object-curly-spacing": ["error", "always"],
         "eol-last": ["error", "always"],
-        "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
+        "lines-between-class-members": [
+            "error",
+            "always",
+            { exceptAfterSingleLine: true },
+        ],
         "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/no-parameter-properties": "off",
         "@typescript-eslint/no-use-before-define": "off",

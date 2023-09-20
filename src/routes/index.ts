@@ -1,6 +1,8 @@
 import { Router } from "express";
-import * as controller from "../controllers/index";
+import * as indexController from "../controllers/index";
+import * as apiController from "../controllers/api";
 
-export const index = Router();
+export const routes = Router();
 
-index.get("/", controller.index);
+routes.get("/", indexController.index);
+routes.get("/api", apiController.index);

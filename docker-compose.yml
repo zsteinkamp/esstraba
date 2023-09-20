@@ -5,7 +5,7 @@ services:
       target: base
     command: npm run watch
     ports:
-      - 3888:3000
+      - 3888:3888
     volumes:
       - ./:/app/
       - /app/node_modules
