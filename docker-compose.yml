@@ -1,0 +1,16 @@
+services:
+  backend:
+    build:
+      context: backend
+      target: prod
+    command: npm run serve
+    volumes:
+      - ./data:/app/data:ro
+  frontend:
+    build:
+      context: frontend
+      target: prod
+    ports:
+      - 3988:3988
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro

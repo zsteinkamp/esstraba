@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: ../backend
+      target: base
+    command: npm run watch
+    ports:
+      - 3888:3888
+    volumes:
+      - ../backend/:/app/
+      - ../data:/app/data:ro
+      - /app/node_modules
+  frontend:
+    build:
+      context: ../frontend
+      target: base
+    command: npm start
+    volumes:
+      - ../frontend/:/app/
+      - /app/node_modules
