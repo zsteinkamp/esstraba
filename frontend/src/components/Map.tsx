@@ -86,22 +86,10 @@ const Map = ({ gpxBody }: MapProps) => {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
           </LayersControl.Overlay>
-          <LayersControl.Overlay name="Relief">
+          <LayersControl.Overlay name="Topo">
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url="http://{s}.tile.stamen.com/toposm-color-relief/{z}/{x}/{y}.jpg"
-            />
-          </LayersControl.Overlay>
-          <LayersControl.Overlay name="Contours">
-            <TileLayer
-              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url="http://{s}.tile.stamen.com/toposm-contours/{z}/{x}/{y}.png"
-            />
-          </LayersControl.Overlay>
-          <LayersControl.Overlay name="Features">
-            <TileLayer
-              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url="http://{s}.tile.stamen.com/toposm-features/{z}/{x}/{y}.png"
+              url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
             />
           </LayersControl.Overlay>
         </LayersControl>
