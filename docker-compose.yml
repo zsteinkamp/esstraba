@@ -4,12 +4,14 @@ services:
       context: backend
       target: prod
     command: npm run serve
+    restart: unless-stopped
     volumes:
       - ./data:/app/data:ro
   frontend:
     build:
       context: frontend
       target: prod
+    restart: unless-stopped
     ports:
       - 3988:3988
     volumes:
