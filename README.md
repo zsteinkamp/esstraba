@@ -21,4 +21,10 @@ Unzip the contents of your archive into the `data/` directory in this repo, or
 change the `docker-compose.yml` file to point the `/app/data` mount at your
 unzipped directory.
 
-From there, just `docker compose up` and you're good to go.
+## Running
+Run `make prod` in the root directory to build and start the server. Ensure your data dump is unzipped to the `data/` directory! The server will be listening on http://localhost:3988/ in production mode.
+
+## Developing
+The frontend and backend code are separated into their respective `frontend/` and `backend/` directories. Each of those directories has a VSCode `devcontainer` configured.
+
+Run `make devup` in the root directory to start the frontend and backend servers in development. You can visit http://localhost:3888/ to view the application.
