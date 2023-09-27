@@ -2,8 +2,13 @@ import { app } from "./app"
 
 const port = app.get("port")
 
-const server = app.listen(port, onListening)
+const server = require('http').createServer(app);
+server.on('upgrade', function (req, socket, head) {
+  proxy.ws(req, socket, head);
+});
 server.on("error", onError)
+server.listen(port)
+const server = app.listen(port, onListening)
 
 function onError(error: NodeJS.ErrnoException) {
   if (error.syscall !== "listen") {

@@ -12,9 +12,8 @@ routes.get("/activities/*", activitiesController.show)
 routes.get("/api/activity/", apiActivityController.index)
 routes.get("/api/activity/:activityId", apiActivityController.show)
 
+const proxy = httpProxy("http://frontend:3888")
+
 if (process.env.NODE_ENV !== "production") {
-  routes.get("*", httpProxy("http://frontend:3000"))
+  routes.get("*", proxy)
 }
-// else {
-//  routes.get("*", express.static("/app/dist_frontend/"))
-//}
