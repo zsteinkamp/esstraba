@@ -87,8 +87,9 @@ function Activity() {
       )
     })
 
-  const activityDate = moment(new Date(activity["Activity Date"])).format(
-    "dddd, MMMM DD, YYYY @ HH:MM",
+  const utcActivityDate = moment.utc(activity["Activity Date"]).unix() * 1000
+  const activityDate = moment(utcActivityDate).format(
+    "dddd, MMMM DD, YYYY @ h:mm a",
   )
 
   return (
@@ -136,7 +137,7 @@ function Activity() {
             </p>
           </div>
           {media && (
-            <div className="grid content-center pt-4 grid-cols-4 gap-2 pr-4">
+            <div className="grid content-center pt-4 grid-cols-4 gap-2">
               {media}
             </div>
           )}

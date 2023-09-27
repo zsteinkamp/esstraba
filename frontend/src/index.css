@@ -56,7 +56,6 @@ a:hover {
 h1 {
   font-family: var(--font-condensed);
   font-weight: bold;
-  font-variant: small-caps;
   @apply text-4xl;
 }
 
@@ -70,10 +69,10 @@ h1 {
 }
 
 .activityDataLabel {
-  @apply leading-6 text-right text-slate-600 text-xs align-bottom;
+  @apply leading-6 text-right text-slate-600 text-sm align-bottom;
 }
 .activityDataValue {
-  @apply leading-6 font-bold text-sm align-bottom;
+  @apply leading-6 font-bold align-bottom;
 }
 
 .datagrid > div.button {

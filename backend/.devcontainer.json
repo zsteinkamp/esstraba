@@ -6,10 +6,11 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "rvest.vs-code-prettier-eslint",
-        "esbenp.prettier-vscode",
-        "dbaeumer.vscode-eslint"
-      ]
+		"rvest.vs-code-prettier-eslint",
+		"esbenp.prettier-vscode",
+		"dbaeumer.vscode-eslint",
+		"mechatroner.rainbow-csv"
+	]
     }
   }
 }

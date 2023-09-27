@@ -158,7 +158,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
           rowObj[column] = activity[column]
           const value = rowObj[column]
           if (column === "Activity Date") {
-            rowObj[column] = Date.parse(value).valueOf().toString()
+            rowObj[column] = (moment.utc(value).unix() * 1000).toString()
           } else if (column === "Media") {
             rowObj[column] = (value && value.split("|").length.toString()) || ""
           }

@@ -3,7 +3,6 @@ import * as mediaController from "../controllers/media"
 import * as activitiesController from "../controllers/activities"
 import * as apiActivityController from "../controllers/apiActivity"
 import httpProxy from "express-http-proxy"
-//import express from "express"
 
 export const routes = Router()
 
