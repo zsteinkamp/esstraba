@@ -1,14 +1,24 @@
 import { app } from "./app"
+import http from "http"
+import httpProxy from "http-proxy"
+import internal from "stream"
 
 const port = app.get("port")
-
-const server = require('http').createServer(app);
-server.on('upgrade', function (req, socket, head) {
-  proxy.ws(req, socket, head);
-});
-server.on("error", onError)
-server.listen(port)
 const server = app.listen(port, onListening)
+//const server = http.createServer(app)
+const proxy = httpProxy.createProxyServer({
+  ws: true,
+  target: "http://frontend:3888",
+})
+
+//server.on("listen", onListening)
+server.on("error", onError)
+server.on(
+  "upgrade",
+  function (req: http.IncomingMessage, socket: internal.Duplex, head: Buffer) {
+    proxy.ws(req, socket, head)
+  },
+)
 
 function onError(error: NodeJS.ErrnoException) {
   if (error.syscall !== "listen") {

@@ -1,5 +1,5 @@
 {
-  "dockerComposeFile": "../docker-compose.yml",
+  "dockerComposeFile": "../dev/docker-compose.yml",
   "service": "frontend",
   "workspaceFolder": "/app",
   "shutdownAction": "stopCompose",
