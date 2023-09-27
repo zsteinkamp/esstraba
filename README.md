@@ -28,3 +28,9 @@ Run `make prod` in the root directory to build and start the server. Ensure your
 The frontend and backend code are separated into their respective `frontend/` and `backend/` directories. Each of those directories has a VSCode `devcontainer` configured.
 
 Run `make devup` in the root directory to start the frontend and backend servers in development. You can visit http://localhost:3888/ to view the application.
+
+## TODO
+* support .gpx.gz files
+* mobile friendly layout
+* text sizes
+* dev frontend websocket
