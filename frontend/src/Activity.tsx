@@ -80,7 +80,7 @@ function Activity() {
               src={`/${mediaFname}`}
               alt="title"
               onClick={() => setCurrPhoto(mediaFname)}
-              className="aspect-square object-cover rounded"
+              className="aspect-square object-cover rounded cursor-pointer"
             />
           </div>
         )
@@ -145,12 +145,12 @@ function Activity() {
       </div>
       {currPhoto && (
         <div
-          className="shade"
+          className="shade cursor-pointer"
           onClick={() => {
             setCurrPhoto("")
           }}
         >
-          <img src={`/${currPhoto}`} />
+          <img src={`/${currPhoto}`} className="cursor-pointer"/>
         </div>
       )}
     </>
