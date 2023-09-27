@@ -1,3 +1,4 @@
+name: esstraba_prod
 services:
   backend:
     build:
