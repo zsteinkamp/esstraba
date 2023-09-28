@@ -7,11 +7,11 @@ const ElapsedTime = ({ input, className = "" }: ElapsedTimeProps) => {
   if (isNaN(seconds)) {
     return <span>¿que?</span>
   }
-  const days = parseInt((seconds / 86400).toString())
+  const days = Math.round(seconds / 86400)
   seconds -= days * 86400
-  const hours = parseInt((seconds / 3600).toString())
+  const hours = Math.round(seconds / 3600)
   seconds -= hours * 3600
-  const minutes = parseInt((seconds / 60).toString())
+  const minutes = Math.round(seconds / 60)
 
   const durationArr = []
   if (days > 0) {

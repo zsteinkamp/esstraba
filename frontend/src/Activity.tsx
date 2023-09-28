@@ -5,6 +5,7 @@ import Map from "./components/Map"
 import ElapsedTime from "./components/ElapsedTime"
 import Elevation from "./components/Elevation"
 import Distance from "./components/Distance"
+import Speed from "./components/Speed"
 
 function Activity() {
   const [activity, setActivity] = useState({} as Record<string, string>)
@@ -94,7 +95,7 @@ function Activity() {
 
   return (
     <>
-      <div className="grid grid-rows-2 md:grid-cols-2">
+      <div className="grid grid-rows-2 md:grid-rows-1 md:grid-cols-2">
         <div className="h-[50vh] md:h-[calc(100vh-4.5rem)] border">
           {gpxBody && <Map gpxBody={gpxBody} />}
         </div>
@@ -107,9 +108,21 @@ function Activity() {
             {activity["Activity Description"]}
           </p>
           <div className="grid gap-2 grid-cols-2">
-            <p className="activityDataLabel">Elapsed Time:</p>
+            <p className="activityDataLabel">Distance:</p>
             <p className="activityDataValue">
-              <ElapsedTime input={activity["Elapsed Time"]} />
+              <Distance input={activity["Distance"]} />
+            </p>
+            <p className="activityDataLabel">Moving Time:</p>
+            <p className="activityDataValue">
+              <ElapsedTime input={activity["Moving Time"]} />
+            </p>
+            <p className="activityDataLabel">Average Speed:</p>
+            <p className="activityDataValue">
+              <Speed
+                time={activity["Moving Time"]}
+                distance={activity["Distance"]}
+                type={activity["Activity Type"]}
+              />
             </p>
             <p className="activityDataLabel">Elevation Gain:</p>
             <p className="activityDataValue">
@@ -118,10 +131,6 @@ function Activity() {
             <p className="activityDataLabel">Elevation High:</p>
             <p className="activityDataValue">
               <Elevation input={activity["Elevation High"]} />
-            </p>
-            <p className="activityDataLabel">Distance:</p>
-            <p className="activityDataValue">
-              <Distance input={activity["Distance"]} />
             </p>
             <p className="activityDataLabel">Calories:</p>
             <p className="activityDataValue">

@@ -13,12 +13,11 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
     return moment(new Date(parseFloat(input))).format(format)
   }
   const elevationFormatter = (input: string): string => {
-    const numVal = parseInt((parseFloat(input) * 3.28).toString())
+    const numVal = Math.round(parseFloat(input) * 3.28)
     return isNaN(numVal) ? "" : numVal.toLocaleString() + " ft"
   }
   const distanceFormatter = (input: string): string => {
-    const numVal =
-      parseInt(((100 * parseFloat(input)) / 1609.34).toString()) / 100.0
+    const numVal = Math.round(100 * parseFloat(input)) / 1609.34 / 100.0
     return isNaN(numVal) ? "" : numVal.toLocaleString() + " mi"
   }
 

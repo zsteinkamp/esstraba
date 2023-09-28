@@ -1,22 +1,22 @@
 interface ElevationProps {
-  unit?: 'feet'
+  unit?: "feet"
   input: string | number
   className?: string
 }
 const Elevation = ({
-  unit = 'feet',
+  unit = "feet",
   input,
-  className = '',
+  className = "",
 }: ElevationProps) => {
-  const meters = typeof input === 'string' ? parseFloat(input) : input
+  const meters = typeof input === "string" ? parseFloat(input) : input
   if (isNaN(meters)) {
     return <span>¿que?</span>
   }
 
-  if (unit === 'feet') {
+  if (unit === "feet") {
     return (
       <span className={`elevation ${className}`}>
-        {parseInt((meters * 3.28).toString()).toLocaleString()} feet
+        {Math.round(meters * 3.28).toLocaleString()} feet
       </span>
     )
   }
