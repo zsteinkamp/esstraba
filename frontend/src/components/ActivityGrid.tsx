@@ -17,7 +17,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
     return isNaN(numVal) ? "" : numVal.toLocaleString() + " ft"
   }
   const distanceFormatter = (input: string): string => {
-    const numVal = Math.round(100 * parseFloat(input)) / 1609.34 / 100.0
+    const numVal = Math.round((10 * parseFloat(input)) / 1609.34) / 10.0
     return isNaN(numVal) ? "" : numVal.toLocaleString() + " mi"
   }
 
@@ -260,7 +260,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
 
   return (
     <>
-      <div className="text-right">
+      <div className="text-right pr-2">
         Activities: <strong>{rows.length} </strong>
         <span className="text-sm italic text-slate-500">
           {rows.length > PAGE_SIZE ? ` (First ${PAGE_SIZE} shown...)` : null}
