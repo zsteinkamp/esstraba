@@ -39,3 +39,5 @@ Run `make devup` in the root directory to start the frontend and backend servers
 
 - Remember sort/filter state when going back to the list from an activity
 - Keyboard/mouse back/next to view photos
+- Filter on activity type
+- Use topo if elev > 500
