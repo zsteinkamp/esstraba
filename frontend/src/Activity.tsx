@@ -94,11 +94,11 @@ function Activity() {
 
   return (
     <>
-      <div className="grid grid-cols-2">
-        <div className="h-[calc(100vh-4.5rem)] border">
+      <div className="grid grid-rows-2 md:grid-cols-2">
+        <div className="h-[50vh] md:h-[calc(100vh-4.5rem)] border">
           {gpxBody && <Map gpxBody={gpxBody} />}
         </div>
-        <div className="pt-12 pl-4 pr-4 h-[calc(100vh-4.5rem)] overflow-auto">
+        <div className="pt-4 md:pt-12 pl-4 pr-4 md:h-[calc(100vh-4.5rem)] md:overflow-auto">
           <h1 className="text-center activityTitle">
             {activity["Activity Name"]}
           </h1>
@@ -150,7 +150,7 @@ function Activity() {
             setCurrPhoto("")
           }}
         >
-          <img src={`/${currPhoto}`} className="cursor-pointer"/>
+          <img src={`/${currPhoto}`} className="cursor-pointer" />
         </div>
       )}
     </>

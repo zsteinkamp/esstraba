@@ -60,12 +60,11 @@ h1 {
 }
 
 .datagrid {
-  width: calc(100vw - 2rem);
-  @apply pl-8 pb-2;
+  @apply pl-1 sm:pl-8 pr-1 sm:pr-8 pb-2 w-full;
 }
 
 .datagrid div {
-  @apply leading-10 min-h-[2.5rem] text-ellipsis whitespace-nowrap overflow-hidden pr-2 pl-2;
+  @apply leading-10 min-h-[2.5rem] text-ellipsis whitespace-nowrap overflow-hidden;
 }
 
 .activityDataLabel {
@@ -86,7 +85,7 @@ h1 {
 .dataRow > * {
   line-height: 2rem;
   min-height: 2.5rem;
-  @apply pl-4 pr-4;
+  @apply pr-0 pl-0 sm:pr-4 sm:pl-4;
 }
 .dataRow:hover > * {
   @apply bg-red-600 text-white;

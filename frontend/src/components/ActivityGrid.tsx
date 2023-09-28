@@ -8,9 +8,9 @@ interface ActivityGridProps {
   activities: Record<string, string>[]
 }
 const ActivityGrid = ({ activities }: ActivityGridProps) => {
-  const dateFormatter = (input: string): string => {
+  const dateFormatter = (input: string, format: string): string => {
     //console.log('DATEFORMATTER', { input })
-    return moment(new Date(parseFloat(input))).format("ddd, MMM DD, YYYY")
+    return moment(new Date(parseFloat(input))).format(format)
   }
   const elevationFormatter = (input: string): string => {
     const numVal = parseInt((parseFloat(input) * 3.28).toString())
@@ -49,6 +49,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
   type ColumnType = {
     field: string
     label?: string
+    buttonClass?: string
     defaultSortAscending?: boolean
     comparator?: (a: string, b: string) => number
     markup?: (val: string, rowIdx: number, colIdx: number) => ReactNode
@@ -62,7 +63,12 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
       markup: (val, rowIdx, colIdx) => {
         return (
           <div key={`r${rowIdx}c${colIdx}d`} className="text-center">
-            {dateFormatter(val)}
+            <span className="hidden md:inline">
+              {dateFormatter(val, "ddd, MMM DD, YYYY")}
+            </span>
+            <span className="inline md:hidden">
+              {dateFormatter(val, "dd M/D/YY")}
+            </span>
           </div>
         )
       },
@@ -131,9 +137,13 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
     {
       field: "Activity Description",
       label: "Description",
+      buttonClass: "hidden md:block",
       markup: (val, rowIdx, colIdx) => {
         return (
-          <div key={`r${rowIdx}c${colIdx}s`} className="text-xs pl-2">
+          <div
+            key={`r${rowIdx}c${colIdx}s`}
+            className="text-xs pl-2 hidden md:block"
+          >
             {val}
           </div>
         )
@@ -250,57 +260,60 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
   }
 
   return (
-    <div
-      key="p"
-      className="datagrid pt-2 w-full grid grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr_4fr]"
-    >
-      <div></div>
-      <div className="filter">
-        <input
-          onChange={handleFilterChange}
-          type="text"
-          className="w-full p-2 border-2 rounded focus:outline-none focus-visible:none"
-          placeholder="Keyword filter..."
-        />
-      </div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+    <>
       <div className="text-right">
         Activities: <strong>{rows.length} </strong>
         <span className="text-sm italic text-slate-500">
           {rows.length > PAGE_SIZE ? ` (First ${PAGE_SIZE} shown...)` : null}
         </span>
       </div>
-      {columns.map((col, idx) => {
-        if (col.hidden) {
-          return null
-        }
-        return (
-          <div className="button" key={`b${idx}`}>
-            <button
-              onClick={() => handleSort(idx)}
-              className={`w-full leading-10 border bg-gray-300 whitespace-nowrap rounded relative ${
-                col.field === currSort.field
-                  ? "bg-red-600 text-white"
-                  : "bg-gray-200"
-              }`}
-            >
-              {col.label || col.field}
-              {col.field === currSort.field ? (
-                currSort.sortAscending ? (
-                  <span className="pl-1">⬆</span>
-                ) : (
-                  <span className="pl-1">️⬇</span>
-                )
-              ) : null}
-            </button>
-          </div>
-        )
-      })}
-      {rowElems}
-    </div>
+      <div
+        key="p"
+        className="datagrid pt-2 w-full grid grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr] md:grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr_4fr]"
+      >
+        <div></div>
+        <div className="filter">
+          <input
+            onChange={handleFilterChange}
+            type="text"
+            className="w-full p-2 border-2 rounded focus:outline-none focus-visible:none"
+            placeholder="Keyword filter..."
+          />
+        </div>
+        <div className=""></div>
+        <div className=""></div>
+        <div className=""></div>
+        <div className=""></div>
+        <div className="hidden md:block"></div>
+        {columns.map((col, idx) => {
+          if (col.hidden) {
+            return null
+          }
+          return (
+            <div className={`button ${col.buttonClass}`} key={`b${idx}`}>
+              <button
+                onClick={() => handleSort(idx)}
+                className={`w-full leading-10 border bg-gray-300 whitespace-nowrap rounded relative ${
+                  col.field === currSort.field
+                    ? "bg-red-600 text-white"
+                    : "bg-gray-200"
+                }`}
+              >
+                {col.label || col.field}
+                {col.field === currSort.field ? (
+                  currSort.sortAscending ? (
+                    <span className="pl-1">⬆</span>
+                  ) : (
+                    <span className="pl-1">️⬇</span>
+                  )
+                ) : null}
+              </button>
+            </div>
+          )
+        })}
+        {rowElems}
+      </div>
+    </>
   )
 }
 

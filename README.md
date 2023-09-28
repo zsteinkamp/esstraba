@@ -31,6 +31,3 @@ Run `make devup` in the root directory to start the frontend and backend servers
 
 ## TODO
 * support .gpx.gz files
-* mobile friendly layout
-* text sizes
-* dev frontend websocket
