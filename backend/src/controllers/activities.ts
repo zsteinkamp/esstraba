@@ -1,5 +1,7 @@
 import { Request, Response } from "express"
 import path from "path"
+import fs from "fs"
+import zlib from "zlib"
 
 export const show = async (req: Request, res: Response): Promise<void> => {
   console.log(req.path)
@@ -7,6 +9,13 @@ export const show = async (req: Request, res: Response): Promise<void> => {
     res.send({ status: 404, msg: "Not Found" })
     return
   }
-  // TODO handle gzip
-  res.sendFile(path.resolve(`data/${req.path}`))
+
+  const stream = req.path.match(/\.gz$/) ?
+    fs.createReadStream(`/app/data${req.path}`).pipe(zlib.createGunzip())
+    :
+    fs.createReadStream(`/app/data${req.path}`)
+
+  res.header('content-type', 'application/gpx+xml')
+  res.header('content-disposition', `attachment; filename="${req.path.split('/')[0].replace(/\.gz$/, '')}"`)
+  stream.pipe(res)
 }

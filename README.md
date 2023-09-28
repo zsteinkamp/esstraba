@@ -30,4 +30,4 @@ The frontend and backend code are separated into their respective `frontend/` an
 Run `make devup` in the root directory to start the frontend and backend servers in development. You can visit http://localhost:3888/ to view the application.
 
 ## TODO
-* support .gpx.gz files
+* ...
