@@ -41,3 +41,4 @@ Run `make devup` in the root directory to start the frontend and backend servers
 - Keyboard/mouse back/next to view photos
 - Filter on activity type
 - Use topo if elev > 500
+- Map start icon file
