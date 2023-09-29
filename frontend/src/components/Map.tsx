@@ -69,6 +69,7 @@ const Map = ({ gpxBody, vertMeters }: MapProps) => {
     iconUrl: "/images/marker-icon.png",
     iconRetinaUrl: "/images/marker-icon-2x.png",
     iconSize: new L.Point(20, 30),
+    iconAnchor:   [10, 30],
     className: "map-icon",
   })
 
