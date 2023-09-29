@@ -15,9 +15,15 @@ const Speed = ({ time, distance, type, className = "" }: SpeedProps) => {
   const mph = (metersSec * 3600) / 1609.34
 
   if (type === "Run") {
+    const minMile = 60 / mph
+    const paceMins = Math.floor(minMile)
+    const paceSecs = Math.round((minMile - paceMins) * 60).toString()
+    if (paceSecs.length === 1) {
+      paceSecs = "0" + paceSecs
+    }
     return (
       <span className={`elevation ${className}`}>
-        {(Math.round(600 / mph) / 10.0).toLocaleString()} min/mile
+        {paceMins}:{paceSecs}/mile
       </span>
     )
   }

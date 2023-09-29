@@ -13,9 +13,10 @@ import L from "leaflet"
 
 interface MapProps {
   gpxBody: string
+  vertMeters: number
 }
 
-const Map = ({ gpxBody }: MapProps) => {
+const Map = ({ gpxBody, vertMeters }: MapProps) => {
   let routePoints = [{ lat: 0, lon: 0 }]
   const gpxParser = new GpxParser()
   gpxParser.parse(gpxBody)
@@ -71,6 +72,8 @@ const Map = ({ gpxBody }: MapProps) => {
     className: "map-icon",
   })
 
+  const showTopo = vertMeters > 50
+
   return (
     (avgLat && avgLon && (
       <MapContainer
@@ -80,13 +83,13 @@ const Map = ({ gpxBody }: MapProps) => {
         style={{ height: "100%", width: "100%" }}
       >
         <LayersControl position="topright">
-          <LayersControl.Overlay checked name="Standard OSM">
+          <LayersControl.Overlay checked={!showTopo} name="Street">
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
           </LayersControl.Overlay>
-          <LayersControl.Overlay name="Topo">
+          <LayersControl.Overlay checked={showTopo} name="Topographic">
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
