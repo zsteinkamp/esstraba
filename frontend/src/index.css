@@ -60,7 +60,7 @@ h1 {
 }
 
 .datagrid {
-  @apply pl-1 sm:pl-8 pr-1 sm:pr-8 pb-2 w-full;
+  @apply pl-2 pr-2 gap-1 pb-2 w-full;
 }
 
 .datagrid div {

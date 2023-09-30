@@ -1,6 +1,7 @@
 "use client"
 
-import { ReactNode, useState } from "react"
+import { ReactNode, useContext, useEffect } from "react"
+import { AppContextType, AppState } from "../App"
 import { Link } from "react-router-dom"
 import moment from "moment"
 
@@ -8,6 +9,8 @@ interface ActivityGridProps {
   activities: Record<string, string>[]
 }
 const ActivityGrid = ({ activities }: ActivityGridProps) => {
+  const { appState, setAppState } = useContext(AppState) as AppContextType
+
   const dateFormatter = (input: string, format: string): string => {
     //console.log('DATEFORMATTER', { input })
     return moment(new Date(parseFloat(input))).format(format)
@@ -150,12 +153,15 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
     },
   ]
 
-  const [currFilter, setCurrFilter] = useState("")
-  const [currSort, setCurrSort] = useState({
-    field: columns[0].field,
-    colIdx: 0,
-    sortAscending: false,
-  })
+  const currFilter = appState.currFilter
+  const currSort = appState.currSort
+
+  //const [currFilter, setCurrFilter] = useState("")
+  //const [currSort, setCurrSort] = useState({
+  //  field: columns[0].field,
+  //  colIdx: 0,
+  //  sortAscending: false,
+  //})
 
   const getRows = () => {
     const ret = activities
@@ -245,27 +251,41 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
     .filter(a => a)
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrFilter(e.target.value.trim().toLowerCase())
+    setAppState({
+      ...appState,
+      currFilter: e.target.value.trim().toLowerCase(),
+    })
   }
   const handleSort = (colIdx: number) => {
-    setCurrSort({
-      field: columns[colIdx].field,
-      colIdx,
-      sortAscending:
-        currSort.colIdx === colIdx
-          ? !currSort.sortAscending
-          : !!columns[colIdx].defaultSortAscending,
+    setAppState({
+      ...appState,
+      currSort: {
+        colIdx,
+        sortAscending:
+          currSort.colIdx === colIdx
+            ? !currSort.sortAscending
+            : !!columns[colIdx].defaultSortAscending,
+      },
     })
   }
 
+  useEffect(() => {
+    setAppState({
+      ...appState,
+      headerChildren: (
+        <div>
+          Activities: <strong>{rows.length} </strong>
+          <span className="text-sm italic text-slate-200">
+            {rows.length > PAGE_SIZE ? ` (First ${PAGE_SIZE} shown...)` : null}
+          </span>
+        </div>
+      ),
+    })
+  }, [rows])
+
   return (
     <>
-      <div className="text-right pr-2">
-        Activities: <strong>{rows.length} </strong>
-        <span className="text-sm italic text-slate-500">
-          {rows.length > PAGE_SIZE ? ` (First ${PAGE_SIZE} shown...)` : null}
-        </span>
-      </div>
+      <div className="text-right pr-2"></div>
       <div
         key="p"
         className="datagrid pt-2 w-full grid grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr] md:grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr_4fr]"
@@ -277,6 +297,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
             type="text"
             className="w-full p-2 border-2 rounded focus:outline-none focus-visible:none"
             placeholder="Keyword filter..."
+            value={currFilter || undefined}
           />
         </div>
         <div className=""></div>
@@ -293,13 +314,13 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
               <button
                 onClick={() => handleSort(idx)}
                 className={`w-full leading-10 border bg-gray-300 whitespace-nowrap rounded relative ${
-                  col.field === currSort.field
+                  col.field === columns[currSort.colIdx].field
                     ? "bg-red-600 text-white"
                     : "bg-gray-200"
                 }`}
               >
                 {col.label || col.field}
-                {col.field === currSort.field ? (
+                {col.field === columns[currSort.colIdx].field ? (
                   currSort.sortAscending ? (
                     <span className="pl-1">⬆</span>
                   ) : (
