@@ -65,11 +65,18 @@ const Map = ({ gpxBody, vertMeters }: MapProps) => {
 
   //console.log("ZOOM", { deltaMax, deltaLat, deltaLon, zoom })
 
-  const customIcon = new L.Icon({
-    iconUrl: "/images/marker-icon.png",
-    iconRetinaUrl: "/images/marker-icon-2x.png",
-    iconSize: new L.Point(20, 30),
-    iconAnchor:   [10, 30],
+  const startPoint = routePoints[0]
+  const startIcon = new L.Icon({
+    iconUrl: "/images/marker-start.png",
+    iconSize: new L.Point(17, 17),
+    iconAnchor: [9, 9],
+    className: "map-icon",
+  })
+  const endPoint = routePoints[routePoints.length - 1]
+  const endIcon = new L.Icon({
+    iconUrl: "/images/marker-end.png",
+    iconSize: new L.Point(17, 17),
+    iconAnchor: [9, 9],
     className: "map-icon",
   })
 
@@ -98,12 +105,8 @@ const Map = ({ gpxBody, vertMeters }: MapProps) => {
           </LayersControl.Overlay>
         </LayersControl>
         <Polyline pathOptions={{ color: "#F00" }} positions={positions} />
-        <Marker
-          icon={customIcon}
-          position={[routePoints[0].lat, routePoints[0].lon]}
-        >
-          <Popup>Start</Popup>
-        </Marker>
+        <Marker icon={startIcon} position={[startPoint.lat, startPoint.lon]} />
+        <Marker icon={endIcon} position={[endPoint.lat, endPoint.lon]} />
       </MapContainer>
     )) || (
       <p className="text-red-600 italic w-[50vw] h-[50vw] text-center leading-[50vw]">
