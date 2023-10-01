@@ -7,6 +7,8 @@ import ElapsedTime from "./components/ElapsedTime"
 import Elevation from "./components/Elevation"
 import Distance from "./components/Distance"
 import Speed from "./components/Speed"
+import { useHotkeys } from "react-hotkeys-hook"
+import { Key } from "ts-key-enum"
 
 function Activity() {
   const { setHeaderChildren } = useContext(
@@ -18,30 +20,6 @@ function Activity() {
   const [currPhotoIdx, setCurrPhotoIdx] = useState(null as number | null)
   const [error, setError] = useState(false)
   const { activityId } = useParams()
-
-  const nextPhoto = () => {
-    console.log(currPhotoIdx, media.length)
-    if (currPhotoIdx !== null && media.length > 0) {
-      setCurrPhotoIdx((currPhotoIdx + 1) % media.length)
-    }
-  }
-  const prevPhoto = () => {
-    if (currPhotoIdx !== null && media.length > 0) {
-      setCurrPhotoIdx((currPhotoIdx - 1) % media.length)
-    }
-  }
-
-  const handleKey = (event: KeyboardEvent) => {
-    if (event.key === "Escape") {
-      return setCurrPhotoIdx(null)
-    }
-    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
-      return nextPhoto()
-    }
-    if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
-      return prevPhoto()
-    }
-  }
 
   useEffect(() => {
     setHeaderChildren(null)
@@ -59,13 +37,50 @@ function Activity() {
       .finally(() => {
         setLoading(false)
       })
-
-    window.addEventListener("keydown", handleKey)
-    // Cleanup
-    return () => {
-      window.removeEventListener("keydown", handleKey)
-    }
   }, [])
+
+  // IMAGES
+  let media = [] as ReactNode[]
+  let mediaFnames = [] as string[]
+
+  const nextPhoto = () => {
+    if (currPhotoIdx !== null && media.length > 0) {
+      setCurrPhotoIdx((currPhotoIdx + 1) % media.length)
+    }
+  }
+  const prevPhoto = () => {
+    if (currPhotoIdx !== null && media.length > 0) {
+      setCurrPhotoIdx((media.length + currPhotoIdx - 1) % media.length)
+    }
+  }
+
+  useHotkeys(Key.Escape, () => setCurrPhotoIdx(null), [currPhotoIdx, media])
+  useHotkeys(["n", "f", Key.ArrowRight, Key.ArrowDown], () => nextPhoto(), [
+    currPhotoIdx,
+    media,
+  ])
+  useHotkeys(["p", "b", Key.ArrowLeft, Key.ArrowUp], () => prevPhoto(), [
+    currPhotoIdx,
+    media,
+  ])
+
+  if (activity && activity["Media"]) {
+    mediaFnames = activity["Media"].split("|")
+    media = mediaFnames.map((mediaFname, idx) => {
+      return (
+        mediaFname && (
+          <div key={mediaFname}>
+            <img
+              src={`/${mediaFname}`}
+              alt="title"
+              onClick={() => setCurrPhotoIdx(idx)}
+              className="aspect-square object-cover rounded cursor-pointer"
+            />
+          </div>
+        )
+      )
+    })
+  }
 
   useEffect(() => {
     if (!activity["Filename"]) {
@@ -92,28 +107,6 @@ function Activity() {
   }
   if (error) {
     return <p>Error!</p>
-  }
-
-  // IMAGES
-  let media = [] as ReactNode[]
-  let mediaFnames = [] as string[]
-
-  if (activity && activity["Media"]) {
-    mediaFnames = activity["Media"].split("|")
-    media = mediaFnames.map((mediaFname, idx) => {
-      return (
-        mediaFname && (
-          <div key={mediaFname}>
-            <img
-              src={`/${mediaFname}`}
-              alt="title"
-              onClick={() => setCurrPhotoIdx(idx)}
-              className="aspect-square object-cover rounded cursor-pointer"
-            />
-          </div>
-        )
-      )
-    })
   }
 
   const utcActivityDate = moment.utc(activity["Activity Date"]).unix() * 1000
