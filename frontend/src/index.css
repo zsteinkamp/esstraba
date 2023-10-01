@@ -8,32 +8,6 @@
 :root {
   --font-condensed: "Roboto Condensed";
 }
-/*
-
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-*/
 
 html {
   font-size: clamp(10px, 2vmin + 1px, 18px);
@@ -41,14 +15,6 @@ html {
 body {
   @apply text-base;
 }
-
-.logo {
-  font-family: var(--font-condensed);
-  font-weight: bold;
-  height: 2.5rem;
-  @apply text-3xl pl-2.5 pt-0.5 uppercase italic text-white;
-}
-
 a:hover {
   text-decoration: underline;
 }
@@ -59,21 +25,19 @@ h1 {
   @apply text-4xl;
 }
 
-.datagrid {
-  @apply pl-2 pr-2 gap-1 pb-2 w-full;
+.logo {
+  font-family: var(--font-condensed);
 }
 
 .datagrid div {
   @apply leading-10 min-h-[2.5rem] text-ellipsis whitespace-nowrap overflow-hidden;
 }
-
-.activityDataLabel {
+.datagrid .activityDataLabel {
   @apply leading-6 text-right text-slate-600 text-sm align-bottom;
 }
-.activityDataValue {
+.datagrid .activityDataValue {
   @apply leading-6 font-bold align-bottom;
 }
-
 .datagrid > div.button {
   font-family: var(--font-condensed);
   @apply pb-2 pt-1;
@@ -92,29 +56,5 @@ h1 {
 }
 
 .shade {
-  position: absolute;
-  z-index: 1001;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
-  @apply grid content-center justify-center;
-}
-.shade img {
-  object-fit: contain;
-  max-width: 90vw;
-  max-height: 90vh;
-  border: 2rem solid black;
-}
-
-.footer {
-  width: 100vw;
-  background: white;
-  height: 1.95rem;
-  z-index: 1000;
-  padding-top: 0.3rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  @apply border-t-red-600 border-t-4 text-xs;
 }

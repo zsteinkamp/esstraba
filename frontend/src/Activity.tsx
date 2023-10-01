@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { ReactNode, useEffect, useContext, useState } from "react"
+import { HeaderChildrenContextType, HeaderChildrenState } from "./App"
 import { useParams } from "react-router-dom"
 import moment from "moment"
 import Map from "./components/Map"
@@ -8,14 +9,43 @@ import Distance from "./components/Distance"
 import Speed from "./components/Speed"
 
 function Activity() {
+  const { setHeaderChildren } = useContext(
+    HeaderChildrenState,
+  ) as HeaderChildrenContextType
   const [activity, setActivity] = useState({} as Record<string, string>)
   const [gpxBody, setGpxBody] = useState("")
   const [loading, setLoading] = useState(true)
-  const [currPhoto, setCurrPhoto] = useState("")
+  const [currPhotoIdx, setCurrPhotoIdx] = useState(null as number | null)
   const [error, setError] = useState(false)
   const { activityId } = useParams()
 
+  const nextPhoto = () => {
+    console.log(currPhotoIdx, media.length)
+    if (currPhotoIdx !== null && media.length > 0) {
+      setCurrPhotoIdx((currPhotoIdx + 1) % media.length)
+    }
+  }
+  const prevPhoto = () => {
+    if (currPhotoIdx !== null && media.length > 0) {
+      setCurrPhotoIdx((currPhotoIdx - 1) % media.length)
+    }
+  }
+
+  const handleKey = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      return setCurrPhotoIdx(null)
+    }
+    if (event.key === "ArrowRight" || event.key === "ArrowDown") {
+      return nextPhoto()
+    }
+    if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
+      return prevPhoto()
+    }
+  }
+
   useEffect(() => {
+    setHeaderChildren(null)
+
     setLoading(true)
     fetch(`/api/activity/${activityId}`)
       .then(res => res.json())
@@ -29,16 +59,11 @@ function Activity() {
       .finally(() => {
         setLoading(false)
       })
-    const handleEsc = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setCurrPhoto("")
-      }
-    }
-    window.addEventListener("keydown", handleEsc)
 
+    window.addEventListener("keydown", handleKey)
     // Cleanup
     return () => {
-      window.removeEventListener("keydown", handleEsc)
+      window.removeEventListener("keydown", handleKey)
     }
   }, [])
 
@@ -70,23 +95,26 @@ function Activity() {
   }
 
   // IMAGES
-  const media =
-    activity &&
-    activity["Media"] &&
-    activity["Media"].split("|").map(mediaFname => {
+  let media = [] as ReactNode[]
+  let mediaFnames = [] as string[]
+
+  if (activity && activity["Media"]) {
+    mediaFnames = activity["Media"].split("|")
+    media = mediaFnames.map((mediaFname, idx) => {
       return (
         mediaFname && (
           <div key={mediaFname}>
             <img
               src={`/${mediaFname}`}
               alt="title"
-              onClick={() => setCurrPhoto(mediaFname)}
+              onClick={() => setCurrPhotoIdx(idx)}
               className="aspect-square object-cover rounded cursor-pointer"
             />
           </div>
         )
       )
     })
+  }
 
   const utcActivityDate = moment.utc(activity["Activity Date"]).unix() * 1000
   const activityDate = moment(utcActivityDate).format(
@@ -97,7 +125,12 @@ function Activity() {
     <>
       <div className="grid grid-rows-2 md:grid-rows-1 md:grid-cols-2">
         <div className="h-[50vh] md:h-[calc(100vh-4.5rem)] border">
-          {gpxBody && <Map gpxBody={gpxBody} vertMeters={parseInt(activity["Elevation Gain"])}/>}
+          {gpxBody && (
+            <Map
+              gpxBody={gpxBody}
+              vertMeters={parseInt(activity["Elevation Gain"])}
+            />
+          )}
         </div>
         <div className="pt-4 md:pt-12 pl-4 pr-4 md:h-[calc(100vh-4.5rem)] md:overflow-auto">
           <h1 className="text-center activityTitle">
@@ -152,14 +185,17 @@ function Activity() {
           )}
         </div>
       </div>
-      {currPhoto && (
+      {media.length > 0 && currPhotoIdx !== null && (
         <div
-          className="shade cursor-pointer"
+          className="absolute z-[1001] top-0 left-0 w-full h-full shade cursor-pointer grid content-center justify-center"
           onClick={() => {
-            setCurrPhoto("")
+            setCurrPhotoIdx(null)
           }}
         >
-          <img src={`/${currPhoto}`} className="cursor-pointer" />
+          <img
+            src={`/${mediaFnames[currPhotoIdx]}`}
+            className="cursor-pointer object-contain max-w[90vw] max-h[90vh] border-2 border-black"
+          />
         </div>
       )}
     </>

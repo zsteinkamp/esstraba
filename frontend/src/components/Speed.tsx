@@ -17,7 +17,7 @@ const Speed = ({ time, distance, type, className = "" }: SpeedProps) => {
   if (type === "Run") {
     const minMile = 60 / mph
     const paceMins = Math.floor(minMile)
-    const paceSecs = Math.round((minMile - paceMins) * 60).toString()
+    let paceSecs = Math.round((minMile - paceMins) * 60).toString()
     if (paceSecs.length === 1) {
       paceSecs = "0" + paceSecs
     }

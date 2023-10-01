@@ -2,7 +2,7 @@ import ActivityList from "./ActivityList"
 import Activity from "./Activity"
 //import reportWebVitals from "./reportWebVitals"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Logo from "./components/Logo"
+import Header from "./components/Header"
 import Footer from "./components/Footer"
 import { ReactNode, useState } from "react"
 import { createContext } from "react"
@@ -11,39 +11,48 @@ export type CurrSortType = {
   colIdx: number
   sortAscending: boolean
 }
-
-export type AppStateType = {
-  headerChildren: ReactNode | null
+export type RowQueryType = {
   currFilter: string | null
   currSort: CurrSortType
 }
-export type AppContextType = {
-  appState: AppStateType
-  setAppState: (appState: AppStateType) => void
+export type HeaderChildrenType = ReactNode | null
+
+export type HeaderChildrenContextType = {
+  headerChildren: HeaderChildrenType
+  setHeaderChildren: (headerChildren: HeaderChildrenType) => void
+}
+export type RowQueryContextType = {
+  rowQuery: RowQueryType
+  setRowQuery: (rowQuery: RowQueryType) => void
 }
 
-export const AppState = createContext<AppContextType | null>(null)
+export const HeaderChildrenState =
+  createContext<HeaderChildrenContextType | null>(null)
+export const RowQueryState = createContext<RowQueryContextType | null>(null)
 
 function App() {
-  const [appState, setAppState] = useState<AppStateType>({
-    headerChildren: null,
+  const [rowQuery, setRowQuery] = useState<RowQueryType>({
     currFilter: null,
     currSort: {
       colIdx: 0,
       sortAscending: false,
     },
   })
+  const [headerChildren, setHeaderChildren] = useState<HeaderChildrenType>(null)
+
   return (
-    <AppState.Provider value={{ appState, setAppState }}>
-      <Logo />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<ActivityList />} />
-          <Route path="/activity/:activityId" element={<Activity />} />
-        </Routes>
-      </BrowserRouter>
-      <Footer />
-    </AppState.Provider>
+    <HeaderChildrenState.Provider value={{ headerChildren, setHeaderChildren }}>
+      <RowQueryState.Provider value={{ rowQuery, setRowQuery }}>
+        <Header />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<ActivityList />} />
+            <Route path="/activity/:activityId" element={<Activity />} />
+          </Routes>
+        </BrowserRouter>
+        <Footer />
+      </RowQueryState.Provider>
+    </HeaderChildrenState.Provider>
   )
 }
 

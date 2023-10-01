@@ -1,7 +1,8 @@
 "use client"
 
 import { ReactNode, useContext, useEffect } from "react"
-import { AppContextType, AppState } from "../App"
+import { HeaderChildrenContextType, HeaderChildrenState } from "../App"
+import { RowQueryContextType, RowQueryState } from "../App"
 import { Link } from "react-router-dom"
 import moment from "moment"
 
@@ -9,7 +10,12 @@ interface ActivityGridProps {
   activities: Record<string, string>[]
 }
 const ActivityGrid = ({ activities }: ActivityGridProps) => {
-  const { appState, setAppState } = useContext(AppState) as AppContextType
+  const { setHeaderChildren } = useContext(
+    HeaderChildrenState,
+  ) as HeaderChildrenContextType
+  const { rowQuery, setRowQuery } = useContext(
+    RowQueryState,
+  ) as RowQueryContextType
 
   const dateFormatter = (input: string, format: string): string => {
     //console.log('DATEFORMATTER', { input })
@@ -153,8 +159,8 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
     },
   ]
 
-  const currFilter = appState.currFilter
-  const currSort = appState.currSort
+  const currFilter = rowQuery.currFilter
+  const currSort = rowQuery.currSort
 
   //const [currFilter, setCurrFilter] = useState("")
   //const [currSort, setCurrSort] = useState({
@@ -251,14 +257,14 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
     .filter(a => a)
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAppState({
-      ...appState,
+    setRowQuery({
+      ...rowQuery,
       currFilter: e.target.value.trim().toLowerCase(),
     })
   }
   const handleSort = (colIdx: number) => {
-    setAppState({
-      ...appState,
+    setRowQuery({
+      ...rowQuery,
       currSort: {
         colIdx,
         sortAscending:
@@ -270,17 +276,14 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
   }
 
   useEffect(() => {
-    setAppState({
-      ...appState,
-      headerChildren: (
-        <div>
-          Activities: <strong>{rows.length} </strong>
-          <span className="text-sm italic text-slate-200">
-            {rows.length > PAGE_SIZE ? ` (First ${PAGE_SIZE} shown...)` : null}
-          </span>
-        </div>
-      ),
-    })
+    setHeaderChildren(
+      <div>
+        Activities: <strong>{rows.length} </strong>
+        <span className="text-sm italic text-slate-200">
+          {rows.length > PAGE_SIZE ? ` (First ${PAGE_SIZE} shown...)` : null}
+        </span>
+      </div>,
+    )
   }, [rows])
 
   return (
@@ -288,7 +291,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
       <div className="text-right pr-2"></div>
       <div
         key="p"
-        className="datagrid pt-2 w-full grid grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr] md:grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr_4fr]"
+        className="datagrid pl-2 pr-2 gap-1 pb-2 pt-2 w-full grid grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr] md:grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr_4fr]"
       >
         <div></div>
         <div className="filter">
