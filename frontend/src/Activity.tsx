@@ -173,7 +173,7 @@ function Activity() {
             <p className="activityDataValue">
               <Elevation input={activity["Elevation Gain"]} />
             </p>
-            <p className="activityDataLabel">Elevation High:</p>
+            <p className="activityDataLabel">Max Elevation:</p>
             <p className="activityDataValue">
               <Elevation input={activity["Elevation High"]} />
             </p>
