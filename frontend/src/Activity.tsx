@@ -1,6 +1,6 @@
-import { ReactNode, useEffect, useContext, useState } from "react"
-import { HeaderChildrenContextType, HeaderChildrenState } from "./App"
-import { useParams } from "react-router-dom"
+import { ReactNode, useEffect, useState } from "react"
+import { SetHeader } from "./components/Header"
+import { useNavigate, useParams } from "react-router-dom"
 import moment from "moment"
 import Map from "./components/Map"
 import ElapsedTime from "./components/ElapsedTime"
@@ -11,19 +11,18 @@ import { useHotkeys } from "react-hotkeys-hook"
 import { Key } from "ts-key-enum"
 
 function Activity() {
-  const { setHeaderChildren } = useContext(
-    HeaderChildrenState,
-  ) as HeaderChildrenContextType
+  //const { setHeaderChildren } = useContext(
+  //  HeaderChildrenState,
+  //) as HeaderChildrenContextType
   const [activity, setActivity] = useState({} as Record<string, string>)
   const [gpxBody, setGpxBody] = useState("")
   const [loading, setLoading] = useState(true)
   const [currPhotoIdx, setCurrPhotoIdx] = useState(null as number | null)
   const [error, setError] = useState(false)
   const { activityId } = useParams()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    setHeaderChildren(null)
-
     setLoading(true)
     fetch(`/api/activity/${activityId}`)
       .then(res => res.json())
@@ -44,22 +43,36 @@ function Activity() {
   let mediaFnames = [] as string[]
 
   const nextPhoto = () => {
+    //console.log("NEXT")
     if (currPhotoIdx !== null && media.length > 0) {
       setCurrPhotoIdx((currPhotoIdx + 1) % media.length)
     }
   }
   const prevPhoto = () => {
+    //console.log("PREV")
     if (currPhotoIdx !== null && media.length > 0) {
       setCurrPhotoIdx((media.length + currPhotoIdx - 1) % media.length)
     }
   }
+  const handleEsc = () => {
+    //console.log("HANDLE ESC", { currPhotoIdx })
+    if (currPhotoIdx !== null) {
+      //console.log(">> CLOSE PHOTO")
+      // photo is displayed, so close it
+      return setCurrPhotoIdx(null)
+    } else {
+      //console.log(">> GO BACK")
+      // no photo showing, so go back
+      navigate(-1)
+    }
+  }
 
-  useHotkeys(Key.Escape, () => setCurrPhotoIdx(null), [currPhotoIdx, media])
-  useHotkeys(["n", "f", Key.ArrowRight, Key.ArrowDown], () => nextPhoto(), [
+  useHotkeys(Key.Escape, handleEsc, [currPhotoIdx])
+  useHotkeys(["n", "f", Key.ArrowRight, Key.ArrowDown], nextPhoto, [
     currPhotoIdx,
     media,
   ])
-  useHotkeys(["p", "b", Key.ArrowLeft, Key.ArrowUp], () => prevPhoto(), [
+  useHotkeys(["p", "b", Key.ArrowLeft, Key.ArrowUp], prevPhoto, [
     currPhotoIdx,
     media,
   ])
@@ -109,13 +122,18 @@ function Activity() {
     return <p>Error!</p>
   }
 
-  const utcActivityDate = moment.utc(activity["Activity Date"]).unix() * 1000
+  const utcActivityDate =
+    moment.utc(activity["Activity Date"], "MMM D, YYYY, H:mm:ss A").unix() *
+    1000
   const activityDate = moment(utcActivityDate).format(
     "dddd, MMMM DD, YYYY @ h:mm a",
   )
 
   return (
     <>
+      <SetHeader>
+        <></>
+      </SetHeader>
       <div className="grid grid-rows-2 md:grid-rows-1 md:grid-cols-2">
         <div className="h-[50vh] md:h-[calc(100vh-4.5rem)] border">
           {gpxBody && (

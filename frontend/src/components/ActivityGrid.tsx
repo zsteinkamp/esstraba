@@ -1,7 +1,7 @@
 "use client"
 
-import { ReactNode, useContext, useEffect } from "react"
-import { HeaderChildrenContextType, HeaderChildrenState } from "../App"
+import { ReactNode, useContext } from "react"
+import { SetHeader } from "./Header"
 import { RowQueryContextType, RowQueryState } from "../App"
 import { Link } from "react-router-dom"
 import moment from "moment"
@@ -10,16 +10,16 @@ interface ActivityGridProps {
   activities: Record<string, string>[]
 }
 const ActivityGrid = ({ activities }: ActivityGridProps) => {
-  const { setHeaderChildren } = useContext(
-    HeaderChildrenState,
-  ) as HeaderChildrenContextType
+  //const { setHeaderChildren } = useContext(
+  //  HeaderChildrenState,
+  //) as HeaderChildrenContextType
   const { rowQuery, setRowQuery } = useContext(
     RowQueryState,
   ) as RowQueryContextType
 
   const dateFormatter = (input: string, format: string): string => {
-    //console.log('DATEFORMATTER', { input })
-    return moment(new Date(parseFloat(input))).format(format)
+    //console.log("DATEFORMATTER", { input })
+    return moment(input, "x").format(format)
   }
   const elevationFormatter = (input: string): string => {
     const numVal = Math.round(parseFloat(input) * 3.28)
@@ -162,13 +162,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
   const currFilter = rowQuery.currFilter
   const currSort = rowQuery.currSort
 
-  //const [currFilter, setCurrFilter] = useState("")
-  //const [currSort, setCurrSort] = useState({
-  //  field: columns[0].field,
-  //  colIdx: 0,
-  //  sortAscending: false,
-  //})
-
+  //console.log("ACTIVITIES", { activities })
   const getRows = () => {
     const ret = activities
       .map(activity => {
@@ -179,7 +173,9 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
           rowObj[column] = activity[column]
           const value = rowObj[column]
           if (column === "Activity Date") {
-            rowObj[column] = (moment.utc(value).unix() * 1000).toString()
+            rowObj[column] = (
+              moment.utc(value, "MMM D, YYYY, H:mm:ss A").unix() * 1000
+            ).toString()
           } else if (column === "Media") {
             rowObj[column] = (value && value.split("|").length.toString()) || ""
           }
@@ -220,11 +216,19 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
       }
       return ascendingResult * (currSort.sortAscending ? 1 : -1)
     })
+    //useUpdateHeader(
+    //  <div>
+    //    <span className="text-sm italic text-slate-200">
+    //      Activities: <strong>{ret.length} </strong>
+    //      {ret.length > PAGE_SIZE ? ` (First ${PAGE_SIZE} shown...)` : null}
+    //    </span>
+    //  </div>,
+    //)
     return ret
   }
 
   const PAGE_SIZE = 100
-  //console.log({ rows, columns })
+  //console.log({ columns })
   const rows = getRows()
   const rowElems = rows
     .slice(0, PAGE_SIZE)
@@ -275,23 +279,12 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
     })
   }
 
-  useEffect(() => {
-    setHeaderChildren(
-      <div>
-        Activities: <strong>{rows.length} </strong>
-        <span className="text-sm italic text-slate-200">
-          {rows.length > PAGE_SIZE ? ` (First ${PAGE_SIZE} shown...)` : null}
-        </span>
-      </div>,
-    )
-  }, [rows])
-
   return (
     <>
       <div className="text-right pr-2"></div>
       <div
         key="p"
-        className="datagrid pl-2 pr-2 gap-1 pb-2 pt-2 w-full grid grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr] md:grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr_4fr]"
+        className="datagrid pl-2 pr-2 pb-2 pt-2 w-full grid grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr] md:grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr_4fr]"
       >
         <div></div>
         <div className="filter">
@@ -313,7 +306,17 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
             return null
           }
           return (
-            <div className={`button ${col.buttonClass}`} key={`b${idx}`}>
+            <div className={`pb-2 pt-1 ${col.buttonClass}`} key={`b${idx}`}>
+              <SetHeader>
+                <div>
+                  <span className="text-sm italic text-slate-200">
+                    Activities: <strong>{rows.length} </strong>
+                    {rows.length > PAGE_SIZE
+                      ? ` (First ${PAGE_SIZE} shown...)`
+                      : null}
+                  </span>
+                </div>
+              </SetHeader>
               <button
                 onClick={() => handleSort(idx)}
                 className={`w-full leading-10 border bg-gray-300 whitespace-nowrap rounded relative ${

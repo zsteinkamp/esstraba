@@ -1,14 +1,29 @@
-import { HeaderChildrenContextType, HeaderChildrenState } from "../App"
-import { useContext } from "react"
+import { useHeaderContext } from "../App"
+import { useEffect, ReactElement } from "react"
 
 interface HeaderProps {
   className?: string
 }
 
+export function SetHeader({ children }: { children: ReactElement | null }) {
+  const hc = useHeaderContext()
+  if (hc) {
+    const { setHeader } = hc
+
+    useEffect(() => {
+      setHeader(children)
+    }, [children, setHeader])
+
+    return null
+  }
+}
+
 const Header = ({ className = "" }: HeaderProps) => {
-  const { headerChildren } = useContext(
-    HeaderChildrenState,
-  ) as HeaderChildrenContextType
+  const hc = useHeaderContext()
+  let header = null
+  if (hc) {
+    header = hc.header
+  }
   return (
     <div
       className={`text-white grid grid-cols-2 items-bottom bg-red-600 border-t-red-600 border-t-2 border-b-red-600 border-b-2 ${className}`}
@@ -19,7 +34,7 @@ const Header = ({ className = "" }: HeaderProps) => {
         </a>
       </div>
       <div className="text-right text-white grid content-end justify-end pr-2.5">
-        {headerChildren}
+        {header}
       </div>
     </div>
   )

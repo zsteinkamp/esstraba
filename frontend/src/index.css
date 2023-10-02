@@ -40,7 +40,6 @@ h1 {
 }
 .datagrid > div.button {
   font-family: var(--font-condensed);
-  @apply pb-2 pt-1;
 }
 .datagrid > div.filter {
   min-height: 1rem;

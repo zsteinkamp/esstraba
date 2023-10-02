@@ -37,6 +37,5 @@ Run `make devup` in the root directory to start the frontend and backend servers
 
 ## TODO
 
-- Keyboard/mouse back/next to view photos
 - Filter on activity type
 - Date slider
