@@ -132,8 +132,8 @@ function Activity() {
   return (
     <>
       <SetHeader />
-      <div className="grid grid-rows-2 md:grid-rows-1 md:grid-cols-2">
-        <div className="h-[50vh] md:h-[calc(100vh-4.5rem)] border">
+      <div className="flex flex-1 flex-col flex-shrink md:flex-row">
+        <div className="h-[50vh] md:h-[calc(100vh-4.5rem)] md:min-w-[66vw] md:max-w-[calc(100vw-35rem)] border">
           {gpxBody && (
             <Map
               gpxBody={gpxBody}
@@ -141,7 +141,7 @@ function Activity() {
             />
           )}
         </div>
-        <div className="pt-4 md:pt-12 pl-4 pr-4 md:h-[calc(100vh-4.5rem)] md:overflow-auto">
+        <div className="pt-4 md:pt-12 pl-4 pr-4 md:h-[calc(100vh-4.5rem)] md:overflow-auto mx-auto md:max-w-[35rem]">
           <h1 className="text-center activityTitle">
             {activity["Activity Name"]}
           </h1>
