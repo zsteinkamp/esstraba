@@ -157,11 +157,13 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
             <div className={`pt-1 ${col.buttonClass}`} key={`b${idx}`}>
               <SetHeader>
                 <div>
-                  <span className="text-sm italic text-slate-200">
+                  <span className="text-sm italic">
                     Activities: <strong>{rows.length} </strong>
-                    {rows.length > PAGE_SIZE
-                      ? ` (First ${PAGE_SIZE} shown...)`
-                      : null}
+                    {rows.length > PAGE_SIZE ? (
+                      <span className="text-red-300">
+                        (First ${PAGE_SIZE} shown...)
+                      </span>
+                    ) : null}
                   </span>
                 </div>
               </SetHeader>
