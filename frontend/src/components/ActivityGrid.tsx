@@ -306,7 +306,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
             return null
           }
           return (
-            <div className={`pb-2 pt-1 ${col.buttonClass}`} key={`b${idx}`}>
+            <div className={`pt-1 ${col.buttonClass}`} key={`b${idx}`}>
               <SetHeader>
                 <div>
                   <span className="text-sm italic text-slate-200">
@@ -319,7 +319,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
               </SetHeader>
               <button
                 onClick={() => handleSort(idx)}
-                className={`w-full leading-10 border bg-gray-300 whitespace-nowrap rounded relative ${
+                className={`w-full leading-10 border bg-gray-300 whitespace-nowrap rounded relative m-2 ${
                   col.field === columns[currSort.colIdx].field
                     ? "bg-red-600 text-white"
                     : "bg-gray-200"
