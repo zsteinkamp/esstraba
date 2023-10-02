@@ -11,9 +11,6 @@ interface ActivityGridProps {
   activities: Record<string, string>[]
 }
 const ActivityGrid = ({ activities }: ActivityGridProps) => {
-  //const { setHeaderChildren } = useContext(
-  //  HeaderChildrenState,
-  //) as HeaderChildrenContextType
   const { rowQuery, setRowQuery } = useContext(
     RowQueryState,
   ) as RowQueryContextType
@@ -75,14 +72,6 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
       }
       return ascendingResult * (currSort.sortAscending ? 1 : -1)
     })
-    //useUpdateHeader(
-    //  <div>
-    //    <span className="text-sm italic text-slate-200">
-    //      Activities: <strong>{ret.length} </strong>
-    //      {ret.length > PAGE_SIZE ? ` (First ${PAGE_SIZE} shown...)` : null}
-    //    </span>
-    //  </div>,
-    //)
     return ret
   }
 

@@ -4,8 +4,7 @@ import Activity from "./Activity"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
-import React, { useState } from "react"
-import { createContext } from "react"
+import { useState, ReactElement, useContext, createContext } from "react"
 
 export type CurrSortType = {
   colIdx: number
@@ -16,7 +15,7 @@ export type RowQueryType = {
   currSort: CurrSortType
 }
 
-export type HeaderContentType = React.ReactElement | null
+export type HeaderContentType = ReactElement | null
 
 export interface HeaderContextType {
   header: HeaderContentType
@@ -25,12 +24,16 @@ export interface HeaderContextType {
 
 // Create the context
 // from https://kyleshevlin.com/updating-state-with-a-component
-export const HeaderContext = createContext<HeaderContextType | null>(null)
+export const HeaderContext = createContext<HeaderContextType>({
+  header: null,
+  setHeader: () => {
+    return
+  },
+})
 
 // Create our provider
-export function HeaderProvider({ children }: { children: React.ReactElement }) {
-  const [header, setHeader] = React.useState<HeaderContentType>(null)
-
+export function HeaderProvider({ children }: { children?: ReactElement }) {
+  const [header, setHeader] = useState<HeaderContentType>(null)
   return (
     <HeaderContext.Provider value={{ header, setHeader }}>
       {children}
@@ -39,33 +42,19 @@ export function HeaderProvider({ children }: { children: React.ReactElement }) {
 }
 
 // Custom hook for consuming the context
-export const useHeaderContext = () => React.useContext(HeaderContext)
+export const useHeaderContext = () => useContext(HeaderContext)
 
 // Hook specifically for updating the heading
 // Name provides a little more context where it gets used
 export const useUpdateHeader = (value: HeaderContentType) => {
-  const headerContext = useHeaderContext()
-  if (headerContext && headerContext.header) {
-    const hc = useHeaderContext()
-    if (hc) {
-      hc.setHeader(value)
-    }
-  }
+  useHeaderContext().setHeader(value)
 }
 
-//export type HeaderChildrenType = ReactNode | null
-//
-//export type HeaderChildrenContextType = {
-//  headerChildren: HeaderChildrenType
-//  setHeaderChildren: (headerChildren: HeaderChildrenType) => void
-//}
 export type RowQueryContextType = {
   rowQuery: RowQueryType
   setRowQuery: (rowQuery: RowQueryType) => void
 }
 
-//export const HeaderChildrenState =
-//  createContext<HeaderChildrenContextType | null>(null)
 export const RowQueryState = createContext<RowQueryContextType | null>(null)
 
 function App() {

@@ -131,9 +131,7 @@ function Activity() {
 
   return (
     <>
-      <SetHeader>
-        <></>
-      </SetHeader>
+      <SetHeader />
       <div className="grid grid-rows-2 md:grid-rows-1 md:grid-cols-2">
         <div className="h-[50vh] md:h-[calc(100vh-4.5rem)] border">
           {gpxBody && (

@@ -5,13 +5,13 @@ interface HeaderProps {
   className?: string
 }
 
-export function SetHeader({ children }: { children: ReactElement | null }) {
+export function SetHeader({ children }: { children?: ReactElement }) {
   const hc = useHeaderContext()
   if (hc) {
     const { setHeader } = hc
 
     useEffect(() => {
-      setHeader(children)
+      setHeader(children || null)
     }, [children, setHeader])
 
     return null
