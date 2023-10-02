@@ -203,7 +203,7 @@ function Activity() {
         >
           <img
             src={`/${mediaFnames[currPhotoIdx]}`}
-            className="cursor-pointer object-contain max-w[90vw] max-h[90vh] border-2 border-black"
+            className="cursor-pointer object-contain max-w-[90vw] max-h-[90vh] border-[4rem] border-black drop-shadow-xl rounded-lg"
           />
         </div>
       )}
