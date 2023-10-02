@@ -133,7 +133,7 @@ function Activity() {
     <>
       <SetHeader />
       <div className="flex flex-1 flex-col flex-shrink md:flex-row">
-        <div className="h-[50vh] md:h-[calc(100vh-4.5rem)] md:min-w-[66vw] md:max-w-[calc(100vw-35rem)] border">
+        <div className="h-[50vh] md:h-[calc(100vh-4.5rem)] md:min-w-[66vw] md:max-w-[calc(100vw-35rem)]">
           {gpxBody && (
             <Map
               gpxBody={gpxBody}
