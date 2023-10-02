@@ -135,7 +135,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
         className="datagrid pl-2 pr-2 pb-2 pt-2 w-full grid grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr] md:grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr_4fr]"
       >
         <div></div>
-        <div className="filter">
+        <div className="pl-2 pt-1 filter">
           <input
             onChange={handleFilterChange}
             type="text"
