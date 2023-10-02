@@ -149,7 +149,7 @@ function Activity() {
           <p className="pt-4 pb-4 text-[80%] text-center">
             {activity["Activity Description"]}
           </p>
-          <div className="grid gap-2 grid-cols-2">
+          <div className="datagrid grid gap-2 grid-cols-2">
             <p className="activityDataLabel">Distance:</p>
             <p className="activityDataValue">
               <Distance input={activity["Distance"]} />
