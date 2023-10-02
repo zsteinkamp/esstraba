@@ -146,7 +146,7 @@ function Activity() {
             {activity["Activity Name"]}
           </h1>
           <p className="text-slate-600 text-center text-sm">{activityDate}</p>
-          <p className="pt-4 pb-4 text-[80%] text-center">
+          <p className="m-auto pt-4 pb-4 text-[80%] max-w-[30rem] text-justify">
             {activity["Activity Description"]}
           </p>
           <div className="datagrid grid gap-2 grid-cols-2">
