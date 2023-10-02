@@ -173,7 +173,7 @@ function Activity() {
             </p>
             <p className="activityDataLabel">Calories:</p>
             <p className="activityDataValue">
-              {parseInt(activity["Calories"]) || "-"}
+              {parseInt(activity["Calories"]).toLocaleString() || "-"}
             </p>
             <p className="activityDataLabel">Gear:</p>
             <p className="activityDataValue">
