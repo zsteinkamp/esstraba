@@ -129,6 +129,12 @@ function Activity() {
     "dddd, MMMM DD, YYYY @ h:mm a",
   )
 
+  const calories = parseInt(activity["Calories"])
+  let calorieStr = "-"
+  if (!isNaN(calories)) {
+    calorieStr = calories.toLocaleString()
+  }
+
   return (
     <>
       <SetHeader />
@@ -172,9 +178,7 @@ function Activity() {
               <Elevation input={activity["Elevation High"]} />
             </p>
             <p className="activityDataLabel">Calories:</p>
-            <p className="activityDataValue">
-              {parseInt(activity["Calories"]).toLocaleString() || "-"}
-            </p>
+            <p className="activityDataValue">{calorieStr}</p>
             <p className="activityDataLabel">Gear:</p>
             <p className="activityDataValue">
               {activity["Activity Gear"] || "-"}
