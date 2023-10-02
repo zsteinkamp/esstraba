@@ -146,10 +146,7 @@ function Activity() {
             {activity["Activity Name"]}
           </h1>
           <p className="text-slate-600 text-center text-sm">{activityDate}</p>
-          <p className="m-auto pt-4 pb-4 text-[80%] max-w-[30rem] text-justify">
-            {activity["Activity Description"]}
-          </p>
-          <div className="datagrid grid gap-2 grid-cols-2">
+          <div className="datagrid grid gap-2 grid-cols-2 pt-8">
             <p className="activityDataLabel">Distance:</p>
             <p className="activityDataValue">
               <Distance input={activity["Distance"]} />
@@ -187,8 +184,11 @@ function Activity() {
               <a href={`/${activity["Filename"]}`}>GPX</a>
             </p>
           </div>
+          <p className="m-auto pt-8 pb-4 text-[80%] max-w-[30rem] text-justify">
+            {activity["Activity Description"]}
+          </p>
           {media && (
-            <div className="grid content-center pt-4 grid-cols-4 gap-2">
+            <div className="grid content-center pt-8 grid-cols-3 gap-2">
               {media}
             </div>
           )}
