@@ -30,7 +30,7 @@ h1 {
 }
 
 .datagrid p {
-  @apply leading-8 min-h-[2.5rem] text-ellipsis whitespace-nowrap overflow-hidden;
+  @apply leading-8 text-ellipsis whitespace-nowrap overflow-hidden;
 }
 .datagrid .activityDataLabel {
   @apply text-right text-slate-600;

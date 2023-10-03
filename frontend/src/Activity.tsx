@@ -188,7 +188,7 @@ function Activity() {
               <a href={`/${activity["Filename"]}`}>GPX</a>
             </p>
           </div>
-          <p className="m-auto pt-8 pb-4 text-[80%] max-w-[30rem] text-justify">
+          <p className="m-auto pl-2 pr-2 pt-8 pb-4 text-sm leading-6 max-w-[30rem]">
             {activity["Activity Description"]}
           </p>
           {media && (
@@ -205,10 +205,18 @@ function Activity() {
             setCurrPhotoIdx(null)
           }}
         >
-          <img
-            src={`/${mediaFnames[currPhotoIdx]}`}
-            className="cursor-pointer object-contain max-w-[90vw] max-h-[90vh] border-[4rem] border-black drop-shadow-xl rounded-lg"
-          />
+          <div className="bg-black p-12 pb-4">
+            <img
+              src={`/${mediaFnames[currPhotoIdx]}`}
+              className="cursor-pointer object-contain max-w-[85vw] max-h-[85vh] drop-shadow-xl rounded-lg"
+            />
+            <div className="flex justify-between text-slate-700 pt-4 pl-4 pr-4 text-xs">
+              <p>{mediaFnames[currPhotoIdx].split("/").slice(-1)}</p>
+              <p className="text-right">
+                {currPhotoIdx + 1} of {media.length}
+              </p>
+            </div>
+          </div>
         </div>
       )}
     </>
