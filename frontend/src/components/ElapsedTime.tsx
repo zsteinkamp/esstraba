@@ -15,30 +15,31 @@ const ElapsedTime = ({ input, className = "" }: ElapsedTimeProps) => {
 
   const durationArr = []
   if (days > 0) {
-    if (days === 1) {
-      durationArr.push("1 day")
-    } else {
-      durationArr.push(days + " days")
-    }
+    durationArr.push(
+      <>
+        {days}
+        <span className="unit">d </span>
+      </>,
+    )
   }
   if (hours > 0) {
-    if (hours === 1) {
-      durationArr.push("1 hour")
-    } else {
-      durationArr.push(hours + " hours")
-    }
+    durationArr.push(
+      <>
+        {hours}
+        <span className="unit">h </span>
+      </>,
+    )
   }
   if (minutes > 0) {
-    if (minutes === 1) {
-      durationArr.push("1 minute")
-    } else {
-      durationArr.push(minutes + " minutes")
-    }
+    durationArr.push(
+      <>
+        {minutes}
+        <span className="unit">m </span>
+      </>,
+    )
   }
 
-  return (
-    <span className={`elapsedTime ${className}`}>{durationArr.join(" ")}</span>
-  )
+  return <span className={`elapsedTime ${className}`}>{durationArr}</span>
 }
 
 export default ElapsedTime

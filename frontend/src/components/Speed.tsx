@@ -23,13 +23,15 @@ const Speed = ({ time, distance, type, className = "" }: SpeedProps) => {
     }
     return (
       <span className={`elevation ${className}`}>
-        {paceMins}:{paceSecs}/mile
+        {paceMins}:{paceSecs}
+        <span className="unit">/mi</span>
       </span>
     )
   }
   return (
     <span className={`speed ${className}`}>
-      {(Math.round(10 * mph) / 10.0).toLocaleString()} mi/hr
+      {(Math.round(10 * mph) / 10.0).toLocaleString()}{" "}
+      <span className="unit">mi/hr</span>
     </span>
   )
 }

@@ -132,7 +132,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
       <div className="text-right pr-2"></div>
       <div
         key="p"
-        className="datagrid pl-2 pr-2 pb-2 pt-2 w-full grid grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr] md:grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr_4fr]"
+        className="datagrid pl-2 pr-2 pb-2 pt-2 w-full grid grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr] md:grid-cols-[2fr_3fr_1fr_1fr_1fr_1fr_2fr]"
       >
         <div></div>
         <div className="pl-2 pt-1 filter">

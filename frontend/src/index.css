@@ -53,6 +53,9 @@ h1 {
 .dataRow:hover > * {
   @apply bg-red-600 text-white;
 }
+.unit {
+  @apply font-normal;
+}
 
 .shade {
   background-color: rgba(0, 0, 0, 0.8);

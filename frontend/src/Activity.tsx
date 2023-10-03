@@ -192,7 +192,7 @@ function Activity() {
             {activity["Activity Description"]}
           </p>
           {media && (
-            <div className="grid content-center pt-8 grid-cols-3 gap-2">
+            <div className="grid content-center pt-8 pb-12 md:pb-4 grid-cols-3 gap-2">
               {media}
             </div>
           )}
@@ -200,7 +200,7 @@ function Activity() {
       </div>
       {media.length > 0 && currPhotoIdx !== null && (
         <div
-          className="absolute z-[1001] top-0 left-0 w-full h-full shade cursor-pointer grid content-center justify-center"
+          className="fixed z-[1001] top-0 left-0 w-full h-full shade cursor-pointer grid content-center justify-center"
           onClick={() => {
             setCurrPhotoIdx(null)
           }}

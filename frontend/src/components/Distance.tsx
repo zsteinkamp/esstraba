@@ -12,7 +12,8 @@ const Distance = ({ unit = "miles", input, className = "" }: DistanceProps) => {
   if (unit === "miles") {
     return (
       <span className={`distance ${className}`}>
-        {(Math.round((100 * meters) / 1609.34) / 100.0).toLocaleString()} miles
+        {(Math.round((100 * meters) / 1609.34) / 100.0).toLocaleString()}{" "}
+        <span className="unit">mi</span>
       </span>
     )
   }
