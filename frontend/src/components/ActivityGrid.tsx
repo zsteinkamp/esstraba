@@ -129,13 +129,25 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
 
   return (
     <>
+      <SetHeader>
+        <div>
+          <span className="text-sm italic">
+            Activities: <strong>{rows.length} </strong>
+            {rows.length > PAGE_SIZE ? (
+              <span className="text-red-300">
+                (First ${PAGE_SIZE} shown...)
+              </span>
+            ) : null}
+          </span>
+        </div>
+      </SetHeader>
       <div className="text-right pr-2"></div>
       <div
         key="p"
-        className="datagrid pl-2 pr-2 pb-2 pt-2 w-full grid grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr] md:grid-cols-[2fr_3fr_1fr_1fr_1fr_1fr_2fr]"
+        className="datagrid pb-2 pt-2 grid grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr] md:grid-cols-[2fr_3fr_1fr_1fr_1fr_1fr_2fr]"
       >
         <div></div>
-        <div className="pl-2 pt-1 filter">
+        <div className="pt-1 pb-2 filter">
           <input
             onChange={handleFilterChange}
             type="text"
@@ -154,22 +166,13 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
             return null
           }
           return (
-            <div className={`pt-1 ${col.buttonClass}`} key={`b${idx}`}>
-              <SetHeader>
-                <div>
-                  <span className="text-sm italic">
-                    Activities: <strong>{rows.length} </strong>
-                    {rows.length > PAGE_SIZE ? (
-                      <span className="text-red-300">
-                        (First ${PAGE_SIZE} shown...)
-                      </span>
-                    ) : null}
-                  </span>
-                </div>
-              </SetHeader>
+            <div
+              className={`pt-1 ml-0.5 mr-0.5 ${col.buttonClass}`}
+              key={`b${idx}`}
+            >
               <button
                 onClick={() => handleSort(idx)}
-                className={`w-full leading-10 border bg-gray-300 whitespace-nowrap rounded relative m-2 ${
+                className={`w-full leading-10 border bg-gray-300 whitespace-nowrap rounded relative ${
                   col.field === columns[currSort.colIdx].field
                     ? "bg-red-600 text-white"
                     : "bg-gray-200"

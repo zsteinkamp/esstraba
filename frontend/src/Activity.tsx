@@ -148,9 +148,7 @@ function Activity() {
           )}
         </div>
         <div className="pt-4 md:pt-12 pl-4 pr-4 md:h-[calc(100vh-4.5rem)] md:overflow-auto mx-auto md:max-w-[35rem]">
-          <h1 className="text-center activityTitle">
-            {activity["Activity Name"]}
-          </h1>
+          <h1 className="text-center pb-2">{activity["Activity Name"]}</h1>
           <p className="text-slate-600 text-center text-sm">{activityDate}</p>
           <div className="datagrid grid gap-2 grid-cols-2 pt-8">
             <p className="activityDataLabel">Distance:</p>

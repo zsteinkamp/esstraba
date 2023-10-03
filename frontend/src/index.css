@@ -30,7 +30,8 @@ h1 {
 }
 
 .datagrid p {
-  @apply leading-8 text-ellipsis whitespace-nowrap overflow-hidden;
+  line-height: 1.9rem;
+  @apply text-ellipsis whitespace-nowrap overflow-hidden;
 }
 .datagrid .activityDataLabel {
   @apply text-right text-slate-600;
@@ -50,7 +51,7 @@ h1 {
   line-height: 1rem;
 }
 .dataRow > * {
-  @apply pt-2 pb-2 pr-0 pl-0 sm:pr-4 sm:pl-4;
+  @apply pt-2 pb-2;
 }
 .dataRow:hover > * {
   @apply bg-red-600 text-white;
