@@ -29,15 +29,19 @@ h1 {
   font-family: var(--font-condensed);
 }
 
-.datagrid div {
-  @apply leading-10 min-h-[2.5rem] text-ellipsis whitespace-nowrap overflow-hidden;
+.datagrid p {
+  @apply leading-8 min-h-[2.5rem] text-ellipsis whitespace-nowrap overflow-hidden;
 }
 .datagrid .activityDataLabel {
-  @apply leading-6 text-right text-slate-600 text-sm align-bottom;
+  @apply text-right text-slate-600;
 }
 .datagrid .activityDataValue {
-  @apply leading-6 font-bold align-bottom;
+  @apply text-lg font-bold;
 }
+.unit {
+  @apply font-normal text-xs pl-0.5 inline-block;
+}
+
 .datagrid > div.button {
   font-family: var(--font-condensed);
 }
@@ -53,10 +57,6 @@ h1 {
 .dataRow:hover > * {
   @apply bg-red-600 text-white;
 }
-.unit {
-  @apply font-normal;
-}
-
 .shade {
   background-color: rgba(0, 0, 0, 0.8);
 }
