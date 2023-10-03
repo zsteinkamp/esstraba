@@ -10,9 +10,14 @@ export type CurrSortType = {
   colIdx: number
   sortAscending: boolean
 }
+export type DateRangeType = {
+  min: number
+  max: number
+}
 export type RowQueryType = {
   currFilter: string | null
   currSort: CurrSortType
+  dateRange: DateRangeType
 }
 
 export type HeaderContentType = ReactElement | null
@@ -52,7 +57,9 @@ export const useUpdateHeader = (value: HeaderContentType) => {
 
 export type RowQueryContextType = {
   rowQuery: RowQueryType
-  setRowQuery: (rowQuery: RowQueryType) => void
+  setRowQuery: (
+    rowQuery: RowQueryType | ((rowQuery: RowQueryType) => RowQueryType),
+  ) => void
 }
 
 export const RowQueryState = createContext<RowQueryContextType | null>(null)
@@ -63,6 +70,10 @@ function App() {
     currSort: {
       colIdx: 0,
       sortAscending: false,
+    },
+    dateRange: {
+      min: -Infinity,
+      max: Infinity,
     },
   })
 

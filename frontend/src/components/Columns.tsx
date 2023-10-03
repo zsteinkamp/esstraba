@@ -90,7 +90,7 @@ export const columns: ColumnType[] = [
     defaultSortAscending: true,
     markup: (val, rowIdx, colIdx) => {
       return (
-        <div key={`r${rowIdx}c${colIdx}d`} className="pl-2">
+        <div key={`r${rowIdx}c${colIdx}d`} className="pl-2 value">
           {val}
         </div>
       )

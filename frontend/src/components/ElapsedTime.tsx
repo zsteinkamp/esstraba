@@ -1,3 +1,5 @@
+import { Fragment } from "react"
+
 interface ElapsedTimeProps {
   input: string | number
   className?: string
@@ -16,26 +18,26 @@ const ElapsedTime = ({ input, className = "" }: ElapsedTimeProps) => {
   const durationArr = []
   if (days > 0) {
     durationArr.push(
-      <>
+      <Fragment key={durationArr.length}>
         <span className="value">{days}</span>
         <span className="unit">d </span>
-      </>,
+      </Fragment>,
     )
   }
   if (hours > 0) {
     durationArr.push(
-      <>
+      <Fragment key={durationArr.length}>
         <span className="value">{hours}</span>
         <span className="unit">h </span>
-      </>,
+      </Fragment>,
     )
   }
   if (minutes > 0) {
     durationArr.push(
-      <>
+      <Fragment key={durationArr.length}>
         <span className="value">{minutes}</span>
         <span className="unit">m </span>
-      </>,
+      </Fragment>,
     )
   }
 

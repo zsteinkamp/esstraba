@@ -3,7 +3,7 @@
 import { columns } from "./Columns"
 import { useContext } from "react"
 import { SetHeader } from "./Header"
-import { RowQueryContextType, RowQueryState } from "../App"
+import { RowQueryContextType, RowQueryState, RowQueryType } from "../App"
 import { Link } from "react-router-dom"
 import moment from "moment"
 import ReactSlider from "react-slider"
@@ -18,6 +18,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
 
   const currFilter = rowQuery.currFilter
   const currSort = rowQuery.currSort
+  const dateRange = rowQuery.dateRange
 
   //console.log("ACTIVITIES", { activities })
   const getRows = () => {
@@ -27,10 +28,12 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
       rows: [] as (Record<string, string> | null)[],
     }
 
+    //console.log("IN getRows()")
+
     ret.rows = activities
       .map(activity => {
         const rowObj = {} as Record<string, string>
-        let foundFilter = !currFilter
+        let foundFilter = !currFilter // tricky move - if there is no filter then foundFilter===true
         let dateMs = null
         for (const colSpec of columns) {
           const column = colSpec.field
@@ -44,14 +47,15 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
           }
           if (
             currFilter &&
-            rowObj[column].toLowerCase().indexOf(currFilter) > -1
+            rowObj[column].toLowerCase().indexOf(currFilter) === -1
           ) {
             foundFilter = true
           }
+          if (dateMs && (dateMs < dateRange.min || dateMs > dateRange.max)) {
+            foundFilter = false
+          }
         }
-        if (!foundFilter) {
-          return null
-        }
+        // get min/max dates of activities
         if (dateMs) {
           if (dateMs < ret.minDate) {
             ret.minDate = dateMs
@@ -59,6 +63,9 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
           if (dateMs > ret.maxDate) {
             ret.maxDate = dateMs
           }
+        }
+        if (!foundFilter) {
+          return null
         }
         return rowObj
       })
@@ -142,10 +149,29 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
     })
   }
 
-  console.log({ min: minDate, max: maxDate })
+  //console.log({ min: minDate, max: maxDate })
 
   const formatDateMs = (dateMs: number): string => {
     return moment(dateMs, "x").format("MMM YYYY")
+  }
+
+  type SliderValue = number[]
+  type TimeoutType = null | number | NodeJS.Timeout
+
+  let debounceSlider = null as TimeoutType
+  const handleSliderChange = (args: SliderValue) => {
+    if (debounceSlider !== null) {
+      clearTimeout(debounceSlider)
+    }
+    debounceSlider = setTimeout(() => {
+      setRowQuery((rowQuery: RowQueryType): RowQueryType => {
+        const newRowQuery = { ...rowQuery }
+        newRowQuery.dateRange.min = args[0]
+        newRowQuery.dateRange.max = args[1]
+        return newRowQuery
+      })
+      //console.log("timeout hit", args, rowQuery.dateRange)
+    }, 300)
   }
 
   return (
@@ -155,9 +181,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
           <span className="text-sm italic">
             Activities: <strong>{rows.length} </strong>
             {rows.length > PAGE_SIZE ? (
-              <span className="text-red-300">
-                (First ${PAGE_SIZE} shown...)
-              </span>
+              <span className="text-red-300">(First {PAGE_SIZE} shown...)</span>
             ) : null}
           </span>
         </div>
@@ -165,7 +189,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
       <div className="text-right pr-2"></div>
       <div
         key="p"
-        className="datagrid pb-2 pt-2 grid grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr] md:grid-cols-[2fr_3fr_1fr_1fr_1fr_1fr_2fr]"
+        className="datagrid pb-8 pt-2 grid grid-cols-[2fr_4fr_1fr_1fr_1fr_1fr] md:grid-cols-[12rem_1fr_5rem_5rem_5rem_5rem_1fr]"
       >
         <div className="pl-1 pr-1">
           {minDate !== Infinity && (
@@ -175,7 +199,8 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
               trackClassName="dateSliderTrack"
               min={minDate}
               max={maxDate}
-              defaultValue={[minDate, maxDate]}
+              defaultValue={[rowQuery.dateRange.min, rowQuery.dateRange.max]}
+              onChange={handleSliderChange}
               ariaLabel={["Lower thumb", "Upper thumb"]}
               ariaValuetext={state =>
                 `Thumb value ${formatDateMs(state.valueNow)}`

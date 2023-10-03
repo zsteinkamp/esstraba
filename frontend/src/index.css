@@ -63,7 +63,7 @@ h1 {
 .dateSlider {
 }
 .dateSliderThumb {
-  @apply text-xs font-bold w-10 text-center mt-1 pt-1 pb-1 text-white bg-red-600;
+  @apply text-xs font-bold w-10 text-center mt-1 pt-1 pb-1 text-white bg-red-600 cursor-pointer;
 }
 .dateSliderTrack {
   @apply h-4 mt-4 ml-2 mr-2 bg-slate-200;
