@@ -50,9 +50,7 @@ h1 {
   line-height: 1rem;
 }
 .dataRow > * {
-  line-height: 2rem;
-  min-height: 2.5rem;
-  @apply pr-0 pl-0 sm:pr-4 sm:pl-4;
+  @apply pt-2 pb-2 pr-0 pl-0 sm:pr-4 sm:pl-4;
 }
 .dataRow:hover > * {
   @apply bg-red-600 text-white;
