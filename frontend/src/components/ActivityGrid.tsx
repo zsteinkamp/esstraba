@@ -167,7 +167,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
           }
           return (
             <div
-              className={`pt-1 ml-0.5 mr-0.5 ${col.buttonClass}`}
+              className={`pt-1 pb-1 ml-0.5 mr-0.5 ${col.buttonClass}`}
               key={`b${idx}`}
             >
               <button
