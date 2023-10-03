@@ -210,7 +210,7 @@ function Activity() {
               src={`/${mediaFnames[currPhotoIdx]}`}
               className="cursor-pointer object-contain max-w-[85vw] max-h-[85vh] drop-shadow-xl rounded-lg"
             />
-            <div className="flex justify-between text-slate-700 pt-4 pl-4 pr-4 text-xs">
+            <div className="flex justify-between text-slate-600 pt-4 pl-4 pr-4 text-xs">
               <p>{mediaFnames[currPhotoIdx].split("/").slice(-1)}</p>
               <p className="text-right">
                 {currPhotoIdx + 1} of {media.length}
