@@ -176,13 +176,13 @@ function Activity() {
               <Elevation input={activity["Elevation High"]} />
             </p>
             <p className="activityDataLabel">Calories:</p>
-            <p className="activityDataValue">{calorieStr}</p>
+            <p className="activityDataValue value">{calorieStr}</p>
             <p className="activityDataLabel">Gear:</p>
-            <p className="activityDataValue">
+            <p className="activityDataValue value">
               {activity["Activity Gear"] || "-"}
             </p>
             <p className="activityDataLabel">Download:</p>
-            <p className="activityDataValue">
+            <p className="activityDataValue value">
               <a href={`/${activity["Filename"]}`}>GPX</a>
             </p>
           </div>

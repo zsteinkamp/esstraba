@@ -1,5 +1,7 @@
 import { ReactNode } from "react"
 import moment from "moment"
+import Elevation from "./Elevation"
+import Distance from "./Distance"
 
 export type ColumnType = {
   field: string
@@ -15,13 +17,11 @@ const dateFormatter = (input: string, format: string): string => {
   //console.log("DATEFORMATTER", { input })
   return moment(input, "x").format(format)
 }
-const elevationFormatter = (input: string): string => {
-  const numVal = Math.round(parseFloat(input) * 3.28)
-  return isNaN(numVal) ? "" : numVal.toLocaleString() + " ft"
+const elevationFormatter = (input: string): ReactNode => {
+  return <Elevation input={input} />
 }
-const distanceFormatter = (input: string): string => {
-  const numVal = Math.round((10 * parseFloat(input)) / 1609.34) / 10.0
-  return isNaN(numVal) ? "" : numVal.toLocaleString() + " mi"
+const distanceFormatter = (input: string): ReactNode => {
+  return <Distance input={input} />
 }
 
 const comparatorFloat = (a: string, b: string) => {
@@ -48,13 +48,29 @@ const comparatorFloat = (a: string, b: string) => {
   return fa < fb ? -1 : 1
 }
 
+const typeMap = {
+  "Alpine Ski": "⛷️",
+  Hike: "🥾",
+  "Inline Skate": "🛼",
+  Ride: "🚴",
+  Run: "🏃",
+  "Stand Up Paddling": "🏄",
+  Swim: "🏊",
+  Walk: "🚶",
+  Workout: "🏋️",
+  Yoga: "🧘",
+} as { [key: string]: string }
+
 export const columns: ColumnType[] = [
   {
     field: "Activity Date",
     comparator: comparatorFloat,
     markup: (val, rowIdx, colIdx) => {
       return (
-        <div key={`r${rowIdx}c${colIdx}d`} className="text-center">
+        <div
+          key={`r${rowIdx}c${colIdx}d`}
+          className="text-center text-xs leading-7"
+        >
           <span className="hidden md:inline">
             {dateFormatter(val, "ddd, MMM DD, YYYY")}
           </span>
@@ -87,7 +103,7 @@ export const columns: ColumnType[] = [
     markup: (val, rowIdx, colIdx) => {
       return (
         <div key={`r${rowIdx}c${colIdx}m`} className="text-center">
-          {val}
+          {typeMap[val]} <span className="text-xs">{val}</span>
         </div>
       )
     },

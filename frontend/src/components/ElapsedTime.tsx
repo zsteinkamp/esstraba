@@ -17,7 +17,7 @@ const ElapsedTime = ({ input, className = "" }: ElapsedTimeProps) => {
   if (days > 0) {
     durationArr.push(
       <>
-        {days}
+        <span className="value">{days}</span>
         <span className="unit">d </span>
       </>,
     )
@@ -25,7 +25,7 @@ const ElapsedTime = ({ input, className = "" }: ElapsedTimeProps) => {
   if (hours > 0) {
     durationArr.push(
       <>
-        {hours}
+        <span className="value">{hours}</span>
         <span className="unit">h </span>
       </>,
     )
@@ -33,7 +33,7 @@ const ElapsedTime = ({ input, className = "" }: ElapsedTimeProps) => {
   if (minutes > 0) {
     durationArr.push(
       <>
-        {minutes}
+        <span className="value">{minutes}</span>
         <span className="unit">m </span>
       </>,
     )

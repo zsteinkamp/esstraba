@@ -36,11 +36,11 @@ h1 {
 .datagrid .activityDataLabel {
   @apply text-right text-slate-600;
 }
-.datagrid .activityDataValue {
-  @apply text-lg font-bold;
+.value {
+  @apply font-semibold;
 }
 .unit {
-  @apply font-normal text-xs pl-0.5 inline-block;
+  @apply font-normal text-xs pl-0.5;
 }
 
 .datagrid > div.button {
@@ -58,4 +58,13 @@ h1 {
 }
 .shade {
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+.dateSlider {
+}
+.dateSliderThumb {
+  @apply text-xs font-bold w-10 text-center mt-1 pt-1 pb-1 text-white bg-red-600;
+}
+.dateSliderTrack {
+  @apply h-4 mt-4 ml-2 mr-2 bg-slate-200;
 }

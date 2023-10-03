@@ -16,7 +16,9 @@ const Elevation = ({
   if (unit === "feet") {
     return (
       <span className={`elevation ${className}`}>
-        {Math.round(meters * 3.28).toLocaleString()}
+        <span className="value">
+          {Math.round(meters * 3.28).toLocaleString()}
+        </span>
         <span className="unit">ft</span>
       </span>
     )
