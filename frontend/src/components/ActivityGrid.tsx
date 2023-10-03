@@ -180,11 +180,12 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
               >
                 {col.label || col.field}
                 {col.field === columns[currSort.colIdx].field ? (
-                  currSort.sortAscending ? (
-                    <span className="pl-1">⬆</span>
-                  ) : (
-                    <span className="pl-1">️⬇</span>
-                  )
+                  <span className="font-white pl-2">
+                    {
+                      /* unicode arrows */
+                      currSort.sortAscending ? "\u2191" : "\u2193"
+                    }
+                  </span>
                 ) : null}
               </button>
             </div>
