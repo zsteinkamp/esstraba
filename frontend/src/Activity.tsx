@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from "react"
 import { SetHeader } from "./components/Header"
 import { useNavigate, useParams } from "react-router-dom"
 import moment from "moment"
-import Map from "./components/Map"
+import MapGl from "./components/MapGl"
 import ElapsedTime from "./components/ElapsedTime"
 import Elevation from "./components/Elevation"
 import Distance from "./components/Distance"
@@ -141,7 +141,7 @@ function Activity() {
       <div className="flex flex-1 flex-col flex-shrink md:flex-row">
         <div className="h-[50vh] md:h-[calc(100vh-4.5rem)] md:min-w-[66vw] md:max-w-[calc(100vw-35rem)]">
           {gpxBody && (
-            <Map
+            <MapGl
               gpxBody={gpxBody}
               vertMeters={parseInt(activity["Elevation Gain"])}
             />
