@@ -125,7 +125,15 @@ function MapGL({ gpxBody, vertMeters }: MapProps) {
       }}
       style={{ width: "100%", height: "100%" }}
       mapStyle={mapStyle}
+      terrain={{ source: "mapbox-dem", exaggeration: 1.5 }}
     >
+      <Source
+        id="mapbox-dem"
+        type="raster-dem"
+        url="mapbox://mapbox.mapbox-terrain-dem-v1"
+        tileSize={512}
+        maxzoom={14}
+      ></Source>
       <Source id="route" type="geojson" data={routeLine}>
         <Layer {...routeLineStyle} />
       </Source>
