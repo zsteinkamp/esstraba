@@ -1,5 +1,11 @@
 import GpxParser from "gpxparser"
-import Map, { CircleLayer, Layer, LineLayer, Source } from "react-map-gl"
+import Map, {
+  CircleLayer,
+  Layer,
+  LineLayer,
+  NavigationControl,
+  Source,
+} from "react-map-gl"
 import type { Feature } from "geojson"
 import "mapbox-gl/dist/mapbox-gl.css"
 
@@ -127,6 +133,7 @@ function MapGL({ gpxBody, vertMeters }: MapProps) {
       mapStyle={mapStyle}
       terrain={{ source: "mapbox-dem", exaggeration: 1.5 }}
     >
+      <NavigationControl showCompass={true} />
       <Source
         id="mapbox-dem"
         type="raster-dem"
