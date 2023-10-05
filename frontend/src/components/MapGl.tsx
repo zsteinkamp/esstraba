@@ -1,4 +1,3 @@
-import GpxParser from "gpxparser"
 import Map, {
   CircleLayer,
   Layer,
@@ -7,20 +6,15 @@ import Map, {
   Source,
 } from "react-map-gl"
 import type { Feature } from "geojson"
+import type { Point } from "gpxparser"
 import "mapbox-gl/dist/mapbox-gl.css"
 
 interface MapProps {
-  gpxBody: string
+  routePoints: Point[]
   vertMeters: number
 }
 
-function MapGL({ gpxBody, vertMeters }: MapProps) {
-  let routePoints = [{ lat: 0, lon: 0 }]
-  const gpxParser = new GpxParser()
-  gpxParser.parse(gpxBody)
-  if (gpxParser.tracks && gpxParser.tracks[0]) {
-    routePoints = gpxParser.tracks[0].points
-  }
+function MapGL({ routePoints, vertMeters }: MapProps) {
   let minLat = routePoints[0].lat
   let minLon = routePoints[0].lon
   let maxLat = routePoints[0].lat

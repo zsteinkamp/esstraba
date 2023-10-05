@@ -9,6 +9,8 @@ import Distance from "./components/Distance"
 import Speed from "./components/Speed"
 import { useHotkeys } from "react-hotkeys-hook"
 import { Key } from "ts-key-enum"
+import GpxParser, { Point } from "gpxparser"
+import ElevChart from "./components/ElevChart"
 
 function Activity() {
   //const { setHeaderChildren } = useContext(
@@ -135,6 +137,14 @@ function Activity() {
     calorieStr = calories.toLocaleString()
   }
 
+  let routePoints = [{ lat: 0, lon: 0, ele: 0, time: new Date() } as Point]
+  const gpxParser = new GpxParser()
+  gpxParser.parse(gpxBody)
+  if (gpxParser.tracks && gpxParser.tracks[0]) {
+    routePoints = gpxParser.tracks[0].points
+  }
+  console.log("POINTS=", routePoints.length)
+
   return (
     <>
       <SetHeader />
@@ -142,12 +152,12 @@ function Activity() {
         <div className="h-[50vh] md:h-[calc(100vh-4.5rem)] md:min-w-[66vw] md:max-w-[calc(100vw-35rem)]">
           {gpxBody && (
             <MapGl
-              gpxBody={gpxBody}
+              routePoints={routePoints}
               vertMeters={parseInt(activity["Elevation Gain"])}
             />
           )}
         </div>
-        <div className="pt-4 md:pt-12 pl-4 pr-4 md:h-[calc(100vh-4.5rem)] md:overflow-auto mx-auto md:max-w-[35rem]">
+        <div className="pt-4 md:pt-12 pl-4 pr-4 md:h-[calc(100vh-4.5rem)] md:overflow-auto mx-auto md:w-[35rem]">
           <h1 className="text-center pb-2">{activity["Activity Name"]}</h1>
           <p className="text-slate-600 text-center text-sm">{activityDate}</p>
           <div className="datagrid grid gap-2 grid-cols-2 pt-8">
@@ -189,6 +199,9 @@ function Activity() {
           <p className="m-auto pl-2 pr-2 pt-8 pb-4 text-sm leading-6 max-w-[30rem]">
             {activity["Activity Description"]}
           </p>
+          <div className="pb-12 w-[100%]">
+            <ElevChart routePoints={routePoints} />
+          </div>
           {media && (
             <div className="grid content-center pt-8 pb-12 md:pb-4 grid-cols-3 gap-2">
               {media}

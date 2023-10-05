@@ -16,10 +16,6 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
     RowQueryState,
   ) as RowQueryContextType
 
-  const currFilter = rowQuery.currFilter
-  const currSort = rowQuery.currSort
-  const dateRange = rowQuery.dateRange
-
   //console.log("ACTIVITIES", { activities })
   const getRows = () => {
     const ret = {
@@ -28,12 +24,13 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
       rows: [] as (Record<string, string> | null)[],
     }
 
-    //console.log("IN getRows()")
+    console.log("IN getRows()")
 
     ret.rows = activities
       .map(activity => {
         const rowObj = {} as Record<string, string>
-        let foundFilter = !currFilter // tricky move - if there is no filter then foundFilter===true
+        let foundFilter = !rowQuery.currFilter // tricky move - if there is no filter then foundFilter===true
+        console.log({ foundFilter, rq: rowQuery.currFilter })
         let dateMs = null
         for (const colSpec of columns) {
           const column = colSpec.field
@@ -46,12 +43,15 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
             rowObj[column] = (value && value.split("|").length.toString()) || ""
           }
           if (
-            currFilter &&
-            rowObj[column].toLowerCase().indexOf(currFilter) === -1
+            rowQuery.currFilter &&
+            rowObj[column].toLowerCase().indexOf(rowQuery.currFilter) !== -1
           ) {
             foundFilter = true
           }
-          if (dateMs && (dateMs < dateRange.min || dateMs > dateRange.max)) {
+          if (
+            dateMs &&
+            (dateMs < rowQuery.dateRange.min || dateMs > rowQuery.dateRange.max)
+          ) {
             foundFilter = false
           }
         }
@@ -71,7 +71,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
       })
       .filter(a => a !== null)
 
-    const column = columns[currSort.colIdx]
+    const column = columns[rowQuery.currSort.colIdx]
     ret.rows.sort((a, b) => {
       if (a === null) {
         return -1
@@ -92,7 +92,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
         }
         ascendingResult = acf < bcf ? -1 : 1
       }
-      return ascendingResult * (currSort.sortAscending ? 1 : -1)
+      return ascendingResult * (rowQuery.currSort.sortAscending ? 1 : -1)
     })
     return ret
   }
@@ -131,10 +131,13 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
     .filter(a => a)
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.trim().toLowerCase()
+    console.log("handleFilterChange", { val })
     setRowQuery({
       ...rowQuery,
-      currFilter: e.target.value.trim().toLowerCase(),
+      currFilter: val,
     })
+    console.log("handleFilterChange END", { curr: rowQuery.currFilter })
   }
   const handleSort = (colIdx: number) => {
     setRowQuery({
@@ -142,8 +145,8 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
       currSort: {
         colIdx,
         sortAscending:
-          currSort.colIdx === colIdx
-            ? !currSort.sortAscending
+          rowQuery.currSort.colIdx === colIdx
+            ? !rowQuery.currSort.sortAscending
             : !!columns[colIdx].defaultSortAscending,
       },
     })
@@ -219,7 +222,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
             type="text"
             className="w-full p-2 border-2 rounded focus:outline-none focus-visible:none"
             placeholder="Keyword filter..."
-            value={currFilter || ""}
+            value={rowQuery.currFilter || ""}
           />
         </div>
         <div className=""></div>
@@ -239,17 +242,17 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
               <button
                 onClick={() => handleSort(idx)}
                 className={`w-full leading-10 border bg-gray-300 whitespace-nowrap rounded relative ${
-                  col.field === columns[currSort.colIdx].field
+                  col.field === columns[rowQuery.currSort.colIdx].field
                     ? "bg-red-600 text-white"
                     : "bg-gray-200"
                 }`}
               >
                 {col.label || col.field}
-                {col.field === columns[currSort.colIdx].field ? (
+                {col.field === columns[rowQuery.currSort.colIdx].field ? (
                   <span className="font-white pl-2">
                     {
                       /* unicode arrows */
-                      currSort.sortAscending ? "\u2191" : "\u2193"
+                      rowQuery.currSort.sortAscending ? "\u2191" : "\u2193"
                     }
                   </span>
                 ) : null}
