@@ -128,7 +128,7 @@ function Activity() {
     moment.utc(activity["Activity Date"], "MMM D, YYYY, H:mm:ss A").unix() *
     1000
   const activityDate = moment(utcActivityDate).format(
-    "dddd, MMMM DD, YYYY @ h:mm a",
+    "dddd, MMMM D, YYYY @ h:mm a",
   )
 
   const calories = parseInt(activity["Calories"])
