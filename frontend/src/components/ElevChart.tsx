@@ -3,7 +3,9 @@ import {
   CategoryScale,
   TimeSeriesScale,
   Chart as ChartJS,
+  Decimation,
   LinearScale,
+  Filler,
   PointElement,
   LineElement,
   Tooltip,
@@ -18,6 +20,8 @@ interface ElevChartProps {
 
 ChartJS.register(
   CategoryScale,
+  Decimation,
+  Filler,
   TimeSeriesScale,
   LinearScale,
   PointElement,
@@ -34,8 +38,16 @@ function ElevChart({ routePoints }: ElevChartProps) {
     scales: {
       y: { title: { display: true, text: "Elevation (ft)" } },
       x: {
-        type: "timeseries",
+        type: "time",
         display: true,
+      },
+    },
+    plugins: {
+      decimation: {
+        enabled: true,
+        algorithm: "lttb",
+        samples: 20,
+        threshold: 50,
       },
     },
   }
@@ -44,7 +56,13 @@ function ElevChart({ routePoints }: ElevChartProps) {
     type: "line",
     datasets: [
       {
-        data: chartData,
+        indexAxis: "x",
+        borderColor: "rgb(255, 0, 0)",
+        fill: {
+          target: "origin",
+          above: "rgba(255, 102, 102, .5)",
+        },
+        data: [...chartData],
       },
     ],
   }
