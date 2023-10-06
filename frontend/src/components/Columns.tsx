@@ -152,7 +152,7 @@ export const columns: ColumnType[] = [
           key={`r${rowIdx}c${colIdx}s`}
           className="text-xs pl-2 hidden md:block"
         >
-          {val}
+          <div className="mb-[0.3rem] mt-[0.3rem]">{val}</div>
         </div>
       )
     },
