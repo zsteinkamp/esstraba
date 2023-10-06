@@ -24,13 +24,13 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
       rows: [] as (Record<string, string> | null)[],
     }
 
-    console.log("IN getRows()")
+    //console.log("IN getRows()")
 
     ret.rows = activities
       .map(activity => {
         const rowObj = {} as Record<string, string>
         let foundFilter = !rowQuery.currFilter // tricky move - if there is no filter then foundFilter===true
-        console.log({ foundFilter, rq: rowQuery.currFilter })
+        //console.log({ foundFilter, rq: rowQuery.currFilter })
         let dateMs = null
         for (const colSpec of columns) {
           const column = colSpec.field
@@ -132,12 +132,12 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.trim().toLowerCase()
-    console.log("handleFilterChange", { val })
+    //console.log("handleFilterChange", { val })
     setRowQuery({
       ...rowQuery,
       currFilter: val,
     })
-    console.log("handleFilterChange END", { curr: rowQuery.currFilter })
+    //console.log("handleFilterChange END", { curr: rowQuery.currFilter })
   }
   const handleSort = (colIdx: number) => {
     setRowQuery({

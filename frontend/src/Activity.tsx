@@ -143,7 +143,7 @@ function Activity() {
   if (gpxParser.tracks && gpxParser.tracks[0]) {
     routePoints = gpxParser.tracks[0].points
   }
-  console.log("POINTS=", routePoints.length)
+  //console.log("POINTS=", routePoints.length)
 
   return (
     <>
