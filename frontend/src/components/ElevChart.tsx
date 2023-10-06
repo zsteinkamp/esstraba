@@ -31,29 +31,32 @@ ChartJS.register(
 
 function ElevChart({ routePoints }: ElevChartProps) {
   const chartData = routePoints.map(p => {
-    return { x: p.time, y: p.ele * 3.28 }
+    return { x: p.time.valueOf(), y: p.ele * 3.28 }
   })
 
   const options = {
     scales: {
+      x: { type: "time" },
       y: { title: { display: true, text: "Elevation (ft)" } },
-      x: {
-        type: "timeseries",
-      },
     },
+    parsing: false,
     plugins: {
       decimation: {
         enabled: true,
         algorithm: "lttb",
+        samples: 200,
       },
     },
   }
 
   const data = {
     type: "line",
+    indexAxis: "x",
     datasets: [
       {
+        parsing: false,
         borderColor: "rgb(255, 0, 0)",
+        pointRadius: 0,
         fill: {
           target: "origin",
           above: "rgba(255, 102, 102, .5)",
