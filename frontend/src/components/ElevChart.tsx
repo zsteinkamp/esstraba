@@ -38,16 +38,13 @@ function ElevChart({ routePoints }: ElevChartProps) {
     scales: {
       y: { title: { display: true, text: "Elevation (ft)" } },
       x: {
-        type: "time",
-        display: true,
+        type: "timeseries",
       },
     },
     plugins: {
       decimation: {
         enabled: true,
         algorithm: "lttb",
-        samples: 20,
-        threshold: 50,
       },
     },
   }
@@ -56,7 +53,6 @@ function ElevChart({ routePoints }: ElevChartProps) {
     type: "line",
     datasets: [
       {
-        indexAxis: "x",
         borderColor: "rgb(255, 0, 0)",
         fill: {
           target: "origin",
