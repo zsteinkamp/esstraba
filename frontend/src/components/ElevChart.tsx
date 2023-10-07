@@ -10,6 +10,7 @@ import {
   LineElement,
   Tooltip,
 } from "chart.js"
+import type { DecimationOptions } from "chart.js"
 import { Line } from "react-chartjs-2"
 import type { Point } from "gpxparser"
 import "chartjs-adapter-moment"
@@ -39,13 +40,13 @@ function ElevChart({ routePoints }: ElevChartProps) {
       x: { type: "time" },
       y: { title: { display: true, text: "Elevation (ft)" } },
     },
-    parsing: false,
+    parsing: false as boolean,
     plugins: {
       decimation: {
-        enabled: true,
-        algorithm: "lttb",
+        enabled: true as boolean,
+        algorithm: "min-max",
         samples: 200,
-      },
+      } as DecimationOptions,
     },
   }
 
@@ -54,7 +55,6 @@ function ElevChart({ routePoints }: ElevChartProps) {
     indexAxis: "x",
     datasets: [
       {
-        parsing: false,
         borderColor: "rgb(255, 0, 0)",
         pointRadius: 0,
         fill: {

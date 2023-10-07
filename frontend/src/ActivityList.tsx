@@ -16,11 +16,19 @@ function ActivityList() {
       })
   }, [])
 
+  const wrap = (msg: string) => {
+    return (
+      <div className="h-96 grid justify-center items-center">
+        <div>{msg}</div>
+      </div>
+    )
+  }
+
   if (error) {
-    return <div>Error...</div>
+    return wrap("Error")
   }
   if (loading) {
-    return <div>Loading...</div>
+    return wrap("Loading")
   }
   return <ActivityGrid activities={activities} />
 }

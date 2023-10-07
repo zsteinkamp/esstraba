@@ -148,11 +148,11 @@ function Activity() {
   return (
     <>
       <SetHeader />
-      <div className="flex flex-1 flex-col flex-shrink md:flex-row">
-        <div className="h-[50vh] md:h-[calc(100vh-4.5rem)] md:min-w-[66vw] md:max-w-[calc(100vw-35rem)]">
+      <div className="flex flex-1 flex-col flex-shrink lg:flex-row">
+        <div className="h-[50vh] lg:h-[calc(100vh-4.5rem)] lg:w-[calc(100vw-30rem)]">
           {gpxBody && <MapGl routePoints={routePoints} />}
         </div>
-        <div className="pt-4 md:pt-12 pl-4 pr-4 md:h-[calc(100vh-4.5rem)] md:overflow-auto mx-auto md:w-[35rem]">
+        <div className="pt-4 lg:pt-12 pl-4 pr-4 lg:h-[calc(100vh-4.5rem)] lg:overflow-auto mx-auto lg:w-[30rem]">
           <h1 className="text-center pb-2">{activity["Activity Name"]}</h1>
           <p className="text-slate-600 text-center text-sm">{activityDate}</p>
           <div className="datagrid grid gap-2 grid-cols-2 pt-8">
@@ -198,7 +198,7 @@ function Activity() {
             <ElevChart routePoints={routePoints} />
           </div>
           {media && (
-            <div className="grid content-center pt-8 pb-12 md:pb-4 grid-cols-3 gap-2">
+            <div className="grid content-center pt-8 pb-12 lg:pb-4 grid-cols-3 gap-2">
               {media}
             </div>
           )}
