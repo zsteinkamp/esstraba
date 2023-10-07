@@ -19,7 +19,7 @@ You will need to bulk-download your activity data. Do that by visiting the
 [Account Download and
 Deletion](https://www.strava.com/athlete/delete_your_account) page. It's a scary
 name, but there you can request an archive download. It's currently rate-limited
-to once per week, so make sure to keep that .zip in a save place!
+to once per week, so make sure to keep that .zip in a safe place!
 
 Unzip the contents of your archive into the `data/` directory in this repo, or
 change the `docker-compose.yml` file to point the `/app/data` mount at your
