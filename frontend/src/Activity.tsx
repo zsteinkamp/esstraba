@@ -97,6 +97,14 @@ function Activity() {
     })
   }
 
+  const wrap = (msg: string) => {
+    return (
+      <div className="h-96 grid justify-center items-center">
+        <div>{msg}</div>
+      </div>
+    )
+  }
+
   useEffect(() => {
     if (!activity["Filename"]) {
       return
@@ -118,10 +126,10 @@ function Activity() {
   }, [activity])
 
   if (loading) {
-    return <p>Loading Activity...</p>
+    return wrap("Loading Activity...")
   }
   if (error) {
-    return <p>Error!</p>
+    return wrap("Error!")
   }
 
   const utcActivityDate =
