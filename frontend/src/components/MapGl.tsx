@@ -124,7 +124,7 @@ function MapGL({ routePoints }: MapProps) {
   return (
     <>
       <div className="relative">
-        <div className="absolute z-[1002] left-2 top-2 mapboxgl-ctrl mapboxgl-ctrl-group">
+        <div className="absolute z-[1002] left-2 top-[0.7rem] mapboxgl-ctrl mapboxgl-ctrl-group">
           <div className="tools-box">
             <button onClick={recenter}>
               <svg
@@ -137,10 +137,6 @@ function MapGL({ routePoints }: MapProps) {
                 <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
               </svg>
             </button>
-          </div>
-        </div>
-        <div className="absolute z-[1002] left-2 top-11 mapboxgl-ctrl mapboxgl-ctrl-group">
-          <div className="tools-box">
             <button onClick={toggleMap} className="text-center">
               <svg
                 focusable="false"
