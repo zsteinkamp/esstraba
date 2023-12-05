@@ -1,5 +1,5 @@
 {
-  "dockerComposeFile": "../dev/docker-compose.yml",
+  "dockerComposeFile": "../esstraba-dev/docker-compose.yml",
   "service": "backend",
   "workspaceFolder": "/app",
   "shutdownAction": "stopCompose",

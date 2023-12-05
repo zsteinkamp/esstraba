@@ -131,7 +131,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
     .filter(a => a)
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value.trim().toLowerCase()
+    const val = e.target.value.toLowerCase()
     //console.log("handleFilterChange", { val })
     setRowQuery({
       ...rowQuery,
@@ -234,6 +234,11 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
           if (col.hidden) {
             return null
           }
+
+          const buttonBg = col.field === columns[rowQuery.currSort.colIdx].field
+            ? "bg-red-600 text-white"
+            : "bg-gray-200"
+
           return (
             <div
               className={`pt-1 pb-1 ml-0.5 mr-0.5 ${col.buttonClass}`}
@@ -241,11 +246,7 @@ const ActivityGrid = ({ activities }: ActivityGridProps) => {
             >
               <button
                 onClick={() => handleSort(idx)}
-                className={`w-full leading-10 border bg-gray-300 whitespace-nowrap rounded relative ${
-                  col.field === columns[rowQuery.currSort.colIdx].field
-                    ? "bg-red-600 text-white"
-                    : "bg-gray-200"
-                }`}
+                className={`w-full leading-10 border bg-gray-300 whitespace-nowrap rounded relative ${buttonBg}`}
               >
                 {col.label || col.field}
                 {col.field === columns[rowQuery.currSort.colIdx].field ? (
