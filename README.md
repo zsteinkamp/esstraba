@@ -31,9 +31,13 @@ Run `make prod` in the root directory to build and start the server. Ensure your
 
 ## Developing
 
-The frontend and backend code are separated into their respective `frontend/` and `backend/` directories. Each of those directories has a VSCode `devcontainer` configured.
+The frontend and backend code are separated into their respective `frontend/` and `backend/` directories.
 
-Run `make devup` in the root directory to start the frontend and backend servers in development. You can visit http://localhost:3888/ to view the application.
+### VSCode Devcontainers
+Each of those directories has a VSCode `devcontainer` configured. Choose "Reopen in Container" to choose frontend or backend. You can open a new window to run both at the same time.
+
+### Docker Compose
+For those who want to use an editor that lacks devcontainers support, run `make devup` in the root directory to start the frontend and backend servers in development mode using `docker compose`. You can visit http://localhost:3888/ to view the application. Changes to source files will trigger a test/build/reload cycle.
 
 ## TODO
 
